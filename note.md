@@ -60,7 +60,7 @@
 
 # 10/11
 
-- After multiple training sessions, the score is seemingling unstable with unknown reason.
+- After multiple training sessions, the score is seemingly unstable with unknown reason.
   - Initial weights might cause an issue? because of its initial range is random.
   - Manaully initialize the weights (fc layer) seems to mild the oscillation, but it is still fluctuating. Maybe, it is caused by size of the data.
 - Base model of the deberta seemed to work for a lot of people, sticking with the base model for a while.
@@ -75,7 +75,7 @@
   > ![Loss2](/misc/loss2.png)
 
 - [TRY] change beta params in SmoothL1Loss to 0.025
-  - [RESULT] it gave a worse result from 0.455xx to 0.457xx. Note that the loss acted differently from the usual beta=1 which normally 0.05~0.04 fro train, 0.10xx~0.11xx for valid to 0.16 for train and 0.35 for valid NEED FURTHER EXPERIMENT.
+  - [RESULT] it gave a worse result from 0.455xx to 0.457xx. Note that the loss acted differently from the usual beta=1 which normaly 0.05~0.04 fro train, 0.10xx~0.11xx for valid to 0.16 for train and 0.35 for valid NEED FURTHER EXPERIMENT.
 - [TRY] found that Adversarial Weight Perturbation (AWP) is working for some kagglers. Need to check out.
 
 - [IDEA] remove escape character like \n.
@@ -94,7 +94,7 @@
 
 - Tried Madgrad with two different lr (9e-6 and 5e-4) gave a worse result. Meanwhile, it is recommended for LM. It might need further experiment.
 
-- AWP is somehow bothersome to implement. COMEBACK LATERFARTHER
+- AWP is somehow bothersome to implement. COMEBACK LATER FOR FURTHER EXPERIMENT
 - Tried Ranger21 with AdamW and Madgrad core.
     - significantly worse than plain AdamW and Madgrad.
 
@@ -104,7 +104,7 @@
 
 # 10/14
 
-- Tweaking lr gave a slight improve to the fold0 (0.455099 -> 0.455003). Some columns were worse but better generalization in overall because of *phraselogy* and *grammar*  were improve. Note that this could be a lucky run. (95e-7)
+- Tweaking lr gave a slight improve to the fold0 (0.455099 -> 0.455003). Some columns were worse but better generalization in overall because of *phraselogy* and *grammar*  were improve. Note that this could be a lucky run. (95e-6)
 
 - As expected put output_hidden_state to True make MeanPooling calculate correctly ,and it improve the fold0 (0.4550024, 0.454889 at the second run). 
 
@@ -160,6 +160,7 @@
         - increase batchsize to 4
         - reinit only last layer due to small dataset
         - [RESULT] substantially imprve the score to 0.445.
+            - later found out that the training dataset did not shuffle
 
     - **SECOND** Using differnet head.
         - ConcatnatePooling last 4 layers
@@ -200,4 +201,150 @@
     - Due to this, batchsize needs to be decreased but that hurt the performance of the model. It cant be fixed do more hyperparams tuning. I decided not to do that because it could take so much time go through tuning process again. 
     - Trying gradient accumulation bs4x2.
         - Did not work. Back to P100.
+- Tried multi-sample dropout p=0.3
+    - slighly worsen. Determined by the result of the first epoch. FURTHER EXPERIMENT ex. p=0.2
 
+- Tried different learning rate in backbone layers and the lower layers
+    - bb 1-e5, ll 2-e5
+    - [RESUTL] Gained 0.0002 from the previous one from 0.44588 to 0.44564
+
+# 10/27
+- Different max_len for different fold
+    - [RESULT] max_len 512 for fold 2 -> did not improve
+
+- [HOLDING] Pseudo labelling from the previous competition.
+    - quite easy to implemention but require a lot of computing power.
+    - Need to be careful when choosing the data in integrate into the original data.
+        - Ex. the distribution.
+
+# 10/28
+- Change number of fold to 4 (Currently 5)
+- Pseudo Labelling from the previous (pipeline almost finish, make the 1st round train remaining)
+
+# 10/29
+- 1.AttentionHead and mean pooling concat on the fold 2 (version 119 as a comparision sample)
+    - [RESULT] 
+        - max_len 512: improved the score on the fold 2 from 0.4605 to 0.4573
+        - max_len 1024: the score slightly dropped from 0.4573 to 0.458343, seems like max_len must depend on fold
+            - ex. fold 0 have achieved the low error (0.4456) with dynamic padding (max_len 1428). Seemingly, it does not fit with the other folds, like fold 2. So the best possible way to achieve higher cv is to pick the right max_len the pariticular fold.
+                - To prove this theory, max_len 512 on fold 0 will be the next experiment.
+                - run cv with attentionhead concatnated to mean pooling, different max_len for different fold [1428, 512, 512, 1428, 1428]
+                    - fold 0 got worse 0.452
+
+- Only swapping where does the layer should be reinitialized impact a lots on the score
+    - reinit after declare poolings (0.450x)
+        - [RESULT] After trained on every folds, even placed reinitization method at the specific step that allow fold 0 to achieve 0.4456. the remaining folds got so much worse.
+            - ((1, 0.4595), (2, 0.4582), (3, 0.4572), (4, 0.4555)). This might mean that the current setup overfitting fold 0.
+
+# 10/30
+- Turn off AWP in fold 2 (0.460581 at 3nd epoch)
+- Turn off AWP and SWA on fold 2 (0.460586 at 3nd epoch)
+
+- Eveyrything is so confusing. Restarting things. (Everhing below this run with max_len 512)
+    - start again with max_len 512 on fold 2 for speed and SWA because it does not require big overhead calculation. (around 32 mins per fold)
+        1. start with 0.4605.
+        2. changed multi-sample dropout to range of 0.1 to 0.5. 
+            - increase to 0.4600
+        Note - Considering changing test subject to fold 4 as it is likely represent the mean of the splits. In other words, it always gives the closet score to the mean of the score.
+        3. switched to fold 4
+            - with 0.4541
+        4. changed mean_pooling to concat_attn_mean_pooling
+            - improved to 0.4538
+        4. chnaged concat_attn_mean_pooling to concat_all_attn_mean_pooling
+            - deceased to 0.4545
+            - stick with concat_all_attn_mean_pooling
+        5. concat_wlp_mean_pooling
+            - 0.4556
+    
+    - concat_attn_mean_pooling, backbone_lr 2-e5, lowlayer 3-e5
+        - 0.4528
+    - weights initialization (xavier_uniform, orthogonal)
+        - xavier_uniform: 0.4476 -> An agressive choice
+            - lb: 0.49
+            - Maybe this is caused by either concatnating with attention head or xavier_uniform itself
+            - Experimenting by change the pooling strategy back to mean_pooling: 0.452
+        - orthogonal: 0.452047 -> A conservatiive choice
+            - lb: 0.50
+            - Likewise, if any thing, there is a change that xavier_uniform better.
+        - Obviously, the score depends on how the weights were initialized before the training.
+    
+    - **NEED TO FIND BETTER WAY TO MAINTAIN CONFIG BETWEEN TRAINING AND INFERENCING NOTEBOOK**
+        - write export fundtion: 
+            - make inference notebook load config from the yaml file.
+            - export to yaml file, Then, loading it using AttrDict, which can access the members (attributes) by dot.
+        - ~~write showing cv table in the inference notebook.~~
+
+# 10/31
+    - add LayerNorm (Summission is taking so much time, more than 2 hours on cpu) <- missed configuration batch_num instead of 1.
+        - fold 0: 0.4501, LB: 0.46
+        - Have seen many people experience the same thing that even the local score improve the LB does not reflect that.
+        - One odd thing that happened when add LayerNorm to the network is train_loss always higher than the valid_loss
+        - Although, it is likely to improved the score from 0.452x to 0.450x
+
+# 11/02
+    - Turn on the AWP
+        - 5 fold [0.4493, 0.4555, 0.4571, 0.4509, 0.4486], CV:0.4524, LB: 0.44
+        - train_loss around 0.131, valid_loss around 0.101
+    - Different between having a LayerNorm in the network and not
+        - fold_0_score + 0.0002, LB lower than not having one.
+        - Local score is more trustworthy. However, It should be aware that fold 0 is always achieving the best score out of the other fold.
+    - Followed [this](https://github.com/Danielhuxc/CLRP-solution) implemention of weighted layer pooling and attention head 
+        - with max_len 1024, layernorm score: 0.4583
+
+    - Time to switch to 4 fold splitting
+        - train without awp for speed, 
+
+# 11/03
+    - exp 10 multidrop all ~~0.5~~ change to 0.3, 0.5 might be a bit too agressive.
+        - reinit with the xavier normal
+        - when reinitailize last layer of the back use normal initial weights
+        - using kaiming for fc layer (turn off awp for speed)
+
+    - exp 11 orthoganol initialization.: fold0 0.4522
+    - exp 12 bb_lr = 1e-5  ll_lr = 2e-5: fold0 0.4542
+    - exp 13 normal dists initialization: fold0 0.4512
+    - exp 14 same setup but turn on AWP: fold0 0.44930413365364075 
+
+# 11/04
+    - exp 15 turn swa on lr=1e-5: fold0 0.45103
+    - exp 16 add layernorm: fold0 0.4499546
+    - exp 17 AttentionPooling with GELU instead of tanh concat with MeanPooling: fold0 0.4514607
+    - exp 18 AttentionHeaad with original tanh concat with MeanPooling: fold0: fold0 0.45265332
+    - exp 19 AttentionHeaad with original tanh concat with MeanPooling (ininitilize with normal dists): fold0 0.45265332
+    - exp 20 increase epoch to 6 and start swa from the 3rd epoch: fold0 0.45049605
+    - exp 21 try AttentionPooling using last hidden state: fold0: 0.44966474
+        - Showing good potential.
+        - concat them?
+
+# 11/06
+    - exp 22 WeightedAverage of all encoders outputs with newly implemented WeightedLayerPooling referring from [this](https://github.com/Danielhuxc/CLRP-solution/blob/main/components/model.py) and [this](https://github.com/oleg-yaroshevskiy/quest_qa_labeling/blob/master/step5_model3_roberta_code/model.py). After that put it through new attention pooling that is using gelu.
+        - not learning anything. (loss is not decreasing)
+    - exp 22.1 fixed where attn pooling should be calculated before dropout.
+    - exp 22.2 weights_init.data[:-1] = -3
+    - exp 22.3 double current lr to 4e-5 and 6e-5
+- exp 23 change pooling strategy to concat_attn_mean_pooling (this time use new one with gelu): fold0 0.44938600063323975
+    - exp 24 turn swa on with swa_lr 5e-6: fold0 0.45361838
+    - exp 25 multidrop_p to 0.5 from 0.3: fold0 0.44981873
+    - exp 26 put lr back to 1e-5 and 2e-5 and turn on SWA(trying to reproduce past result)
+
+
+# 11/08
+    - run all 4 fold with exp23 setup
+        - [0.44938636, 0.45520418, 0.45231235, 0.44644296]
+        - CV: 0.45288518 
+
+    - exp 27 same setup as exp23 except 4 epoch and start AWP from the start:fold0 0.4480045
+    [IDEA] averaging model's last few checkpoint.
+        - can do it manually or using the provided one.
+    
+    - exp 28 start AWP at the 2nd epoch: fold0 0.4486684
+    - exp 29 same setup as exp27 but start SWA from step 1300/1464 (last 0.112): fold0 0.4491706 lb: 0.44 (higher than exp27, higher than CV_MODE exp23)
+    - exp 30 using manual SWA by average 3 different checkpoints [1200, 1300, 1400].
+    - exp 31 same setup as exp27 but run on fold 2 0.4598968
+    - Candidate for ensembling model
+        - BigBird
+        - Longformer
+        - Funnel Transformer
+
+    - exp 32 same as exp31 multi-sample dropout from all 0.3 to range of 0.1 to 0.5: fold2 0.45964053
+        - stick with this

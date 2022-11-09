@@ -1,0 +1,15 @@
+gpu T4   T 2:23:21 (2.3892) around 4.6  CU from CU70.31 remains CU65.90
+gpu A100 T 0:40:40 (0.6722) around 9.06 CU from CU65.90 remains CU56.84
+gpu T4   T ?:??:?? (?.????) around 4.04 CU from CU56.84 remains CU52.80
+gpu T4   T ?:??:?? (?.????) around 2.93 CU from CU52.80 remains CU49.87
+gpu T4   T 2:18:19 (2.3053) around 4.68 CU from CU49.87 remains CU45.19
+gpu T4   T ?:??:?? (?.????) around 2.75 CU from CU45.19 remains CU42.44
+gpu T4   T 1:27:03 (?.????) around 3.27 CU from CU42.44 remains CU39.17
+gpu T4   T 1:28:10 (?.????) around 3.04 CU from CU39.17 remains CU36.13
+gpu T4   T ?:??:?? (?.????) around 3.11 CU from CU36.13 remains CU33.02
+gpu T4   T ?:??:?? (?.????) around 3.11 CU from CU36.13 remains CU33.02
+gpu T4   T ?:??:?? (?.????) around 2.90 CU from CU33.02 remains CU30.12
+gpu T4   T ?:??:?? (?.????) around 4.39 CU from CU30.12 remains CU25.73
+gpu T4   T 2:16:52 (?.????) around 4.62 CU from CU25.73 remains CU21.11
+gpu T4   T ?:??:?? (?.????) around 4.80 CU from CU21.11 remains CU16.31
+gpu T4   T ?:??:?? (?.????) around  CU from CU16.31 remains CU12.41
