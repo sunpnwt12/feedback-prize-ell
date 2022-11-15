@@ -275,76 +275,157 @@
         - ~~write showing cv table in the inference notebook.~~
 
 # 10/31
-    - add LayerNorm (Summission is taking so much time, more than 2 hours on cpu) <- missed configuration batch_num instead of 1.
-        - fold 0: 0.4501, LB: 0.46
-        - Have seen many people experience the same thing that even the local score improve the LB does not reflect that.
-        - One odd thing that happened when add LayerNorm to the network is train_loss always higher than the valid_loss
-        - Although, it is likely to improved the score from 0.452x to 0.450x
+- add LayerNorm (Summission is taking so much time, more than 2 hours on cpu) <- missed configuration batch_num instead of 1.
+
+- fold 0: 0.4501, LB: 0.46
+    - Have seen many people experience the same thing that even the local score improve the LB does not reflect that.
+    - One odd thing that happened when add LayerNorm to the network is train_loss always higher than the valid_loss
+    - Although, it is likely to improved the score from 0.452x to 0.450x
 
 # 11/02
-    - Turn on the AWP
-        - 5 fold [0.4493, 0.4555, 0.4571, 0.4509, 0.4486], CV:0.4524, LB: 0.44
-        - train_loss around 0.131, valid_loss around 0.101
-    - Different between having a LayerNorm in the network and not
-        - fold_0_score + 0.0002, LB lower than not having one.
-        - Local score is more trustworthy. However, It should be aware that fold 0 is always achieving the best score out of the other fold.
-    - Followed [this](https://github.com/Danielhuxc/CLRP-solution) implemention of weighted layer pooling and attention head 
-        - with max_len 1024, layernorm score: 0.4583
+- Turn on the AWP
+    - 5 fold [0.4493, 0.4555, 0.4571, 0.4509, 0.4486], CV:0.4524, LB: 0.44
+    - train_loss around 0.131, valid_loss around 0.101
 
-    - Time to switch to 4 fold splitting
-        - train without awp for speed, 
+- Different between having a LayerNorm in the network and not
+    - fold_0_score + 0.0002, LB lower than not having one.
+    - Local score is more trustworthy. However, It should be aware that fold 0 is always achieving the best score out of the other fold.
+
+- Followed [this](https://github.com/Danielhuxc/CLRP-solution) implemention of weighted layer pooling and attention head 
+    - with max_len 1024, layernorm score: 0.4583
+
+- Time to switch to 4 fold splitting
+    - train without awp for speed, 
 
 # 11/03
-    - exp 10 multidrop all ~~0.5~~ change to 0.3, 0.5 might be a bit too agressive.
-        - reinit with the xavier normal
-        - when reinitailize last layer of the back use normal initial weights
-        - using kaiming for fc layer (turn off awp for speed)
+- exp 10 multidrop all ~~0.5~~ change to 0.3, 0.5 might be a bit too agressive.
+    - reinit with the xavier normal
+    - when reinitailize last layer of the back use normal initial weights
+    - using kaiming for fc layer (turn off awp for speed)
 
-    - exp 11 orthoganol initialization.: fold0 0.4522
-    - exp 12 bb_lr = 1e-5  ll_lr = 2e-5: fold0 0.4542
-    - exp 13 normal dists initialization: fold0 0.4512
-    - exp 14 same setup but turn on AWP: fold0 0.44930413365364075 
+- exp 11 orthoganol initialization.: fold0 0.4522
+
+- exp 12 bb_lr = 1e-5  ll_lr = 2e-5: fold0 0.4542
+
+- exp 13 normal dists initialization: fold0 0.4512
+
+- exp 14 same setup but turn on AWP: fold0 0.44930413365364075 
 
 # 11/04
-    - exp 15 turn swa on lr=1e-5: fold0 0.45103
-    - exp 16 add layernorm: fold0 0.4499546
-    - exp 17 AttentionPooling with GELU instead of tanh concat with MeanPooling: fold0 0.4514607
-    - exp 18 AttentionHeaad with original tanh concat with MeanPooling: fold0: fold0 0.45265332
-    - exp 19 AttentionHeaad with original tanh concat with MeanPooling (ininitilize with normal dists): fold0 0.45265332
-    - exp 20 increase epoch to 6 and start swa from the 3rd epoch: fold0 0.45049605
-    - exp 21 try AttentionPooling using last hidden state: fold0: 0.44966474
-        - Showing good potential.
-        - concat them?
+- exp 15 turn swa on lr=1e-5: fold0 0.45103
+
+- exp 16 add layernorm: fold0 0.4499546
+
+- exp 17 AttentionPooling with GELU instead of tanh concat with MeanPooling: fold0 0.4514607
+
+- exp 18 AttentionHeaad with original tanh concat with MeanPooling: fold0: fold0 0.45265332
+
+- exp 19 AttentionHeaad with original tanh concat with MeanPooling (ininitilize with normal dists): fold0 0.45265332
+
+- exp 20 increase epoch to 6 and start swa from the 3rd epoch: fold0 0.45049605
+
+- exp 21 try AttentionPooling using last hidden state: fold0: 0.44966474
+    - Showing good potential.
+    - concat them?
 
 # 11/06
-    - exp 22 WeightedAverage of all encoders outputs with newly implemented WeightedLayerPooling referring from [this](https://github.com/Danielhuxc/CLRP-solution/blob/main/components/model.py) and [this](https://github.com/oleg-yaroshevskiy/quest_qa_labeling/blob/master/step5_model3_roberta_code/model.py). After that put it through new attention pooling that is using gelu.
-        - not learning anything. (loss is not decreasing)
-    - exp 22.1 fixed where attn pooling should be calculated before dropout.
-    - exp 22.2 weights_init.data[:-1] = -3
-    - exp 22.3 double current lr to 4e-5 and 6e-5
-- exp 23 change pooling strategy to concat_attn_mean_pooling (this time use new one with gelu): fold0 0.44938600063323975
-    - exp 24 turn swa on with swa_lr 5e-6: fold0 0.45361838
-    - exp 25 multidrop_p to 0.5 from 0.3: fold0 0.44981873
-    - exp 26 put lr back to 1e-5 and 2e-5 and turn on SWA(trying to reproduce past result)
+- exp 22 WeightedAverage of all encoders outputs with newly implemented WeightedLayerPooling referring from [this](https://github.com/Danielhuxc/CLRP-solution/blob/main/components/model.py) and [this](https://github.com/oleg-yaroshevskiy/quest_qa_labeling/blob/master/step5_model3_roberta_code/model.py). After that put it through new attention pooling that is using gelu.
+    - not learning anything. (loss is not decreasing)
+    
+- exp 22.1 fixed where attn pooling should be calculated before dropout.
 
+- exp 22.2 weights_init.data[:-1] = -3
+
+- exp 22.3 double current lr to 4e-5 and 6e-5
+
+- exp 23 change pooling strategy to concat_attn_mean_pooling (this time use new one with gelu): fold0 0.44938600063323975
+
+- exp 24 turn swa on with swa_lr 5e-6: fold0 0.45361838
+
+- exp 25 multidrop_p to 0.5 from 0.3: fold0 0.44981873
+
+- exp 26 put lr back to 1e-5 and 2e-5 and turn on SWA(trying to reproduce past result)
 
 # 11/08
-    - run all 4 fold with exp23 setup
-        - [0.44938636, 0.45520418, 0.45231235, 0.44644296]
-        - CV: 0.45288518 
+- run all 4 fold with exp23 setup
+    - [0.44938636, 0.45520418, 0.45231235, 0.44644296]
+    - CV: 0.45288518 
 
-    - exp 27 same setup as exp23 except 4 epoch and start AWP from the start:fold0 0.4480045
-    [IDEA] averaging model's last few checkpoint.
-        - can do it manually or using the provided one.
+- exp 27 same setup as exp23 except 4 epoch and start AWP from the start:fold0 0.4480045
+[IDEA] averaging model's last few checkpoint.
+    - can do it manually or using the provided one.
+
+- exp 28 start AWP at the 2nd epoch: fold0 0.4486684
+
+- exp 29 same setup as exp27 but start SWA from step 1300/1464 (last 0.112): fold0 0.4491706 lb: 0.44 (higher than exp27, higher than CV_MODE exp23)
+
+- exp 30 using manual SWA by average 3 different checkpoints [1200, 1300, 1400].
+
+- exp 31 same setup as exp27 but run on fold 2 0.4598968
+
+- Candidate for ensembling model
+    - BigBird
+    - Longformer
+    - Funnel Transformer
+
+- exp 32 same as exp31 multi-sample dropout from all 0.3 to range of 0.1 to 0.5: fold2 0.45964053
+    - stick with this
+
+
+# 11/09-11
+- Lost all the tracking between the dates (note is inside WSL and it brokes)
     
-    - exp 28 start AWP at the 2nd epoch: fold0 0.4486684
-    - exp 29 same setup as exp27 but start SWA from step 1300/1464 (last 0.112): fold0 0.4491706 lb: 0.44 (higher than exp27, higher than CV_MODE exp23)
-    - exp 30 using manual SWA by average 3 different checkpoints [1200, 1300, 1400].
-    - exp 31 same setup as exp27 but run on fold 2 0.4598968
-    - Candidate for ensembling model
-        - BigBird
-        - Longformer
-        - Funnel Transformer
 
-    - exp 32 same as exp31 multi-sample dropout from all 0.3 to range of 0.1 to 0.5: fold2 0.45964053
-        - stick with this
+# 11/12
+- exp 43s12
+    - 4 fold [0.46427143, 0.45597076, 0.4439039, 0.4494147] CV:0.45350114 LB: higer than seed 42
+    - when emsemble this with seed 42, the lb score increase and became the first among all summits.
+
+- exp 43s0
+    - 4 fold [0.45604673, 0.45623007, 0.45081356, 0.44854555] CV: 0.4529697 LB: higher than seed 42 but lower than seed 12
+
+- when blend all 3 seeds
+    - CV: 0.449868, LB: 0.43 (Finally, but stil close to 0.440)
+    - using optuna to tune weight for averaging CV: 0.449862S
+
+# 11/13 
+- exp 45 tried bigbird-roberta-base, seed 12: fold 3 0.46028018
+
+- checking different between seeds(42, 12, 0)
+    - CV chnages considerably by only changing seed.
+    - So technically, included extra some features like unique_words altetinate how the data is spliting. which means alternated splited data might be equivalent to some random seed. Can not comfirm this because haven't tried yet.
+
+- exp 46 tried all allenai/longformer-base-4096, seed 12: fold 3 
+    - Maybe longformer has different architecture, error occurred after 120 steps.
+
+- exp 47 back to bigbird-roberta-large seeed 12: fold 0 0.47063088
+    - large model start to overfit very quick
+
+- Found bugs in gradient accumulation: FIXED
+  - Regular Nb (debertav3)
+  - Bigbird Nb
+  - FunnelTransofmer Nb
+  - colab/regular Nb
+  - colab/bigbird Nb
+
+- exp 48 based on exp45, increase learning rate to 3e-5, 5-e5: fold 3 0.45909524
+
+- exp 49s12 run cv based on exp48, to testify how it would behavior.
+    - 4 fold [0.4735262, 0.4650949, 0.44908154, 0.45909524] CV: 0.46183953 LB: 0.44 quite below.
+    - the cv itself is pretty bad but when ensemble to the first 3 deberta model cv increase from 0.449862(weighted) to 0.449352(weighted) (by 0.0006)
+
+# 11/14
+
+- Seems like ensemble deberta and bigbird (both are base models) is working together very well
+  - correlation between cv and lb is good (if cv increases, lb is also increase)
+
+- exp49s42
+  - 4 fold [0.4536219, 0.46550596, 0.4655917, 0.45861617] CV: 0.4608834 LB: 0.44 higher than seed 12 but still lower than deberta-v3-base model.
+
+- As expected, As cv increase, the lb also increase.
+
+# 11/15
+- Somehow selecting only high score folds in both bigbird and debertav3 model. increase lb score.
+  - This is very dangerous because it is likely to overfit the pulibc test dataset.
+
+- exp 50 trying deberta-v3-large seed 42, bs 4 ga 2 ,max_len 1024 : fold 0 0.44656098
