@@ -252,7 +252,7 @@
             - improved to 0.4538
         4. chnaged concat_attn_mean_pooling to concat_all_attn_mean_pooling
             - deceased to 0.4545
-            - stick with concat_all_attn_mean_pooling
+            - stick with concat_attn_mean_pooling
         5. concat_wlp_mean_pooling
             - 0.4556
     
@@ -429,3 +429,145 @@
   - This is very dangerous because it is likely to overfit the pulibc test dataset.
 
 - exp 50 trying deberta-v3-large seed 42, bs 4 ga 2 ,max_len 1024 : fold 0 0.44656098
+    - Don't know why but the score is looking quite good on lb 0.44 higher than exp43s0
+    - complete the cv would be a good idea.
+
+# 11/16
+- [TODO] complete exp50 4 fold [1, 2, 3] left.
+    - [DONE] [1, 2, 3]
+
+- next model would be longerformer or deberta-v2-base.
+- deberta-v2-base does not exist so deberta-base is only choice for base model.
+
+- exp 51 trying deberta-base seed12 bs 5 beause deberta-base has more paameters (100 vs 86)
+    - Cannot find a way to fixed OOM error. Decided to skip for now.
+
+- After submitted exp43+exp49s(42, 12)
+- Found bugs in accumulatte_step configuaration
+  - if accumulate_step = 0, gradient accumulation is not used
+  - Howver, if accumulate_step == 1 only loss / accumulate_step will be triggered but not optimizer.step()
+
+# 11/17
+- included deberta-v3-large model is significantly increase cv to 0.4479 for simple averaging and 0.4471 for weighted averaging.
+    - Aligning CV and LB is quite a relief.
+    - that being said, it is likely that selecting particular fold in the full 4 folds train give a better result
+      - in this case, with exp43 + exp49s42,12 + exp50s42f0 has higher lb rank
+        - this weighted submit jump to sliver medal area.
+      - again, this is very dangerous becuase the very selected folds are more likely to overfit to public testset
+
+- [CONSIDERING DIRECTIONS]
+  - train one more large model?
+  - train differnt architecture like bart or longformer or roberta?
+  - train deberta-base (v1)?
+
+# 11/18
+
+- exp 50s12 train deberta-v3-large model on seed 12
+    - 4 fold [0.44656095, 0.4565786, 0.45514414, 0.4498687] CV: 0.4498687
+    - after submit with weighted averaged of exp43+exp49s42,12+exp50s42,12(CV: 0.446733), it is clear that it improved when included seed 12 of the large model. What strange is simple averaged one is ranked higher than the weighted one, maybe, because it is a bit overfitting.
+    - what beyond this submit is likely to be overfitting submit. ex. selecting particular fold in the full 4-5 folds.
+
+- oor0 (Out of record)
+    - previously trained 5 fold 5 epoch swa last 0.25 of the training
+    - mean_pooling, multiple sample dropout 0.1
+    - weighted ensemble increase cv to 0.44707 from 0.44713, but it does not reflect on lb
+
+- exp 52 tried roberta-base seed 0: fold 0 0.459063650
+    - due to shorter max_len 512, per fold is very fast around 32 mins per fold
+    - further experiment, 3 seeds of this model
+
+- It might be better to mix different acrchitectures in final submit
+  - since roberta is in bert family the result might not be significantly improved or in worse case scenario, it overfits because the way bert family still have similar parts inside themself, which means, it could train toward in similar ways even if they are different in detail.
+
+- exp 53 tried longformer-base, seed 42 bs8 max_len 1024
+    - so the errors or what ever caused an error to the previous exp is max_len. (last time was 1426, it is not 512*x)
+
+# 11/19
+
+- exp 54s42 roberta-large
+    - 4 fold [0.45199814, 0.45807615, 0.46153107, 0.45669726] CV: 0.45876816
+    - included this to the ensembled model increase score to 0.44657 (simple) and 0.44601 (weighted)
+    - in public lb mean still higher than weighted one (select both of them in final subs) and last final sub is fold-selected one
+    - add one more model should help boost the score
+
+- exp 55 funnel-transformer/large
+    - the training loss stuck around 0.3xxx and it did not decrease afterward.
+    - gave up on this
+
+# 11/20
+
+- exp 56 bigbird-roberta-large
+
+- exp 57 longformer-large mean pooling
+    - CV 0.45473
+
+# 11/21
+
+- exp 57c longformer-large concat_attn_mean_pooling: fold 0 
+
+# 11/23
+
+- exp 58 pretrain deberta-v3-base max_len 768 on generated **pseudo-label** seed 42
+    - pseudo-labels 1st round (exp58s42 and exp58s12) deberta-v3-base
+    - chose max_len 768 because of puporse of diversity
+    - seed 42
+        - 1st round
+            - tried with only 1 epoch and finetune on given dataset 3 epoch
+                - fold 0: 0.44800234 --> 0.44696045	
+                - fold 1: 0.4555346  --> 0.45513305
+                - fold 2: 0.45989653 --> 0.45806667	
+                - fold 3: 0.44715628 --> 0.44541147
+                - CV:  0.452647447 --> 0.451443940 (by 0.0012)
+        - 2nd round
+
+    - seed 12
+        - 1 epoch pretrined and 3 epoch finetune
+            - fold 0: 
+            - fold 1: 
+            - fold 2: 
+            - fold 3: 
+            - CV: 
+
+# 11/24
+- [TODO]
+  1. ~~make oof df from the 1st round (can be done in colab? load model from google drive)~~
+  1. ~~decide what to include in 2nd round~~
+  1. ~~Move pseudo-labels flow into colab~~ (mk, ~~pret, finet~~)  (cannot move mk because all trained model is uploaded to the kaggle dataset, unless download all models to colab)
+
+- exp 59
+    - pseudo-labels 2nd round (exp58s42 and exp58s12)
+
+- What if bigbird didn't go well with the concatnated heads?
+- exp 60 bigbird-roberta-base seed 42 with **mean pooling** increase lr to 3e-5 and 4e-5
+    - comparing with concat_attn_mean_pooling
+    - fold 0: 
+
+- exp 61 pretrain bigbird-roberta-base max_len 768 on generated **pseudo-label** seed 42
+    - pseudo-labels 1st round (exp58s42 and exp58s12) for bigbird-roberta-base
+    - seed 42
+        - tried with only 1 epoch and finetune on given dataset 4 epoch (bigbird needs longer and more agressive train)
+            - fold 0: 0.4536219  --> 0.4523439
+            - fold 1: 0.46550596 --> 0.46609166
+            - fold 2: 0.4655917  --> 0.46358514
+            - fold 3: 0.45861617 --> 0.4582764
+            - CV: 0.4608834 --> 0.46013138 (by 0.00075)
+    - seed 12
+        - 1 epoch predtrained and 4 epoch finetune
+            - fold 0: 
+            - fold 1: 
+            - fold 2: 
+            - fold 3: 
+            - CV: 
+    
+- exp 62 pretrain deberta-v3-large max_len 768 on generated **pseudo-label** seed 42
+
+- cv and lb are starting misaligned from where roberta-large seed 12 was included
+    - public lb datset is quite small. there is a good chance this particular dataset doesn't represent the whole dataset (private lb dataset).
+    - so trust cv is a way to go.
+
+# 11/25
+- [TODO]
+    1. finetune deberta-v3-large (exp62) using pretrained models in google drive
+    1. pseudo-label roberta-large (as it is so fast to train)
+
+- exp 63 pretrain roberta-large max_len 512 on generated **pseudo-label** seed 42
