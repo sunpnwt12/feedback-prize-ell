@@ -497,6 +497,7 @@
 # 11/20
 
 - exp 56 bigbird-roberta-large
+    - didn't finish as first fold did not show good sign
 
 - exp 57 longformer-large mean pooling
     - CV 0.45473
@@ -504,6 +505,7 @@
 # 11/21
 
 - exp 57c longformer-large concat_attn_mean_pooling: fold 0 
+    - didn't finish as first fold did not show good sign
 
 # 11/23
 
@@ -518,15 +520,14 @@
                 - fold 2: 0.45989653 --> 0.45806667	
                 - fold 3: 0.44715628 --> 0.44541147
                 - CV:  0.452647447 --> 0.451443940 (by 0.0012)
-        - 2nd round
 
     - seed 12
         - 1 epoch pretrined and 3 epoch finetune
-            - fold 0: 
-            - fold 1: 
-            - fold 2: 
-            - fold 3: 
-            - CV: 
+            - fold 0: 0.46427143 --> 0.463923
+            - fold 1: 0.45597076 --> 0.454694
+            - fold 2: 0.4439039  --> 0.4426024
+            - fold 3: 0.4494147  --> 0.4470898
+            - CV: 0.453390 --> 0.4521891 (by 0.0012009)
 
 # 11/24
 - [TODO]
@@ -551,15 +552,20 @@
             - fold 2: 0.4655917  --> 0.46358514
             - fold 3: 0.45861617 --> 0.4582764
             - CV: 0.4608834 --> 0.46013138 (by 0.00075)
-    - seed 12
-        - 1 epoch predtrained and 4 epoch finetune
-            - fold 0: 
-            - fold 1: 
-            - fold 2: 
-            - fold 3: 
-            - CV: 
     
 - exp 62 pretrain deberta-v3-large max_len 768 on generated **pseudo-label** seed 42
+    - seed 42
+        - fold 0: 0.44656095 --> 0.44457
+        - fold 1: 0.45514414 --> 0.45244
+        - fold 2: 0.4565786 --> 0.45539
+        - fold 3: 0.4498687 -->  0.44897
+        - CV: 0.452084 --> 0.4502 (by 0.001884)
+    - seed 12
+        - fold 0: 0.46305826 --> 0.45956
+        - fold 1: 0.45678416 --> 0.45486
+        - fold 2: 0.44530618 --> 0.44161
+        - fold 3: 0.45020148 --> 0.44804
+        - CV: 0.453944 --> 0.451133 (by 0.002811)
 
 - cv and lb are starting misaligned from where roberta-large seed 12 was included
     - public lb datset is quite small. there is a good chance this particular dataset doesn't represent the whole dataset (private lb dataset).
@@ -567,7 +573,62 @@
 
 # 11/25
 - [TODO]
-    1. finetune deberta-v3-large (exp62) using pretrained models in google drive
-    1. pseudo-label roberta-large (as it is so fast to train)
+    1. ~~finetune deberta-v3-large (exp62) using pretrained models in google drive~~
+    1. ~~pseudo-label roberta-large (as it is so fast to train)~~
 
 - exp 63 pretrain roberta-large max_len 512 on generated **pseudo-label** seed 42
+    - seed 42
+        - fold 0: 0.45199814 --> 0.45017728
+        - fold 1: 0.45807615 --> 0.45647225
+        - fold 2: 0.46153107 --> 0.45822012
+        - fold 3: 0.45308042 --> 0.45669726
+        - CV: 0.457107 --> 0.454488 (by 0.002619)
+    - seed 12
+        - fold 0: 0.4629476  --> 0.4623566
+        - fold 1: 0.46175924 --> 0.4607107
+        - fold 2: 0.44510302 --> 0.4439592
+        - fold 3: 0.45451307 --> 0.4520159
+        - cv: 0.45617303 --> 0.45485672 (by 0.00131631)
+
+# 11/26
+- [TODO]
+    1. ~~calculated cv included with deberta-v3-large pl1~~
+    1. ~~make pretrained labels seed 12 and make it datasets (on kaggle kernels)~~
+    1. ~~pseudo-labels roberta-large seed 12 (on colab)~~
+    1. ~~pseudo-labels deberta-v3-base seed 12 (on kaggle kernels)~~
+    1. if have time left pseudo-labels longformer-large seed 12? but what max_len
+    1. if have time left train roberta-large seed 0?
+
+- How about deberta-v3-large seed 0? (with fixed one)
+
+- retrain all seed 0 with fix one?
+    - as it is not included in any pseudo-labelling process
+    - or instead use this new fix train pl 2nd round
+      - will it leak?
+        - it might not leak because it introduce new pl=data to the fresh downloaded models
+        - It might leak because those new pl-data are made from the model that knows about these data
+
+
+# 11/28
+
+- exp 65 deberta-v3-small max_len 768 seed 42
+    - 4 fold [0.45532247, 0.46335778, 0.462499, 0.4542868] CV: 0.45886650681495667
+    - CV is not bad comparing to the other architectures.
+    - It did not contribute to ensembled models, perhaps, because it did not introduce any diversities.
+
+- After trained and tried many models, this should be final submission modelS
+    - it comprised of 14 models, 5 different architectures.
+        - **deberta-v3-base 3 seeds (42, 12, 0)**
+            - 42 and 12 are pseudo-labels 1 round trained models
+        - **deberta-v3-large 3 seeds (42, 12, 0)**
+            - this seed 0 is a little bit unique from others, since I accidently spilted thte data with one-hot encoded (the mentioned fix one)
+        - **deberta-v3-large 2 seeds (42, 12)**
+            - these models are pseudo-labels 1 round trained models
+            - mixed them with the original one as it imporved the score
+        - **bigbird-roberta-base seed 42**
+            - trained 3 seeds but others did not improve cv
+        - **roberta-large 3 seeds (42, 12, 0)**
+            - seed 42 is pseudo-labels, trained 12 but did not improve cv
+        - **longformer-large 2 seeds (42, 12)**
+    - Ensembled all models with simple mean: ***0.445133***
+    - Weighed ensembled: ***0.4450627***
