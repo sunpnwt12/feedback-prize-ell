@@ -1,32 +1,62 @@
 # feedback-prize-ell
 This is repository for tracking Feedback Prize - ELL kaggle competition
-<!-- &#9745; for check --> 
-<!-- &#9744; for uncheck -->
-| Model                                                           | Weighted | CV       | Public LB | Rank LB |
-| --------------------------------------------------------------- | -------- | -------- | --------- | ------- |
-| microsoft/deberta-v3-base (seed 42)                             | -        | 0.452696 | 0.44      | 34      |
-| microsoft/deberta-v3-base (seed 12)                             | -        | 0.453501 | 0.44      | 27      |
-| microsoft/deberta-v3-base (seed 0)                              | -        | 0.452969 | 0.44      | 29      |
-| microsoft/deberta-v3-base (3 seeds)                             | N        | 0.449868 | 0.43      | 24      |
-| microsoft/deberta-v3-base (3 seeds)                             | Y        | 0.449862 | -         | -       |
-| google/bigbird-roberta-base (seed 42)                           | -        | 0.460883 | 0.44      |         |
-| google/bigbird-roberta-base (seed 12)                           | -        | 0.461839 | 0.44      |         |
-| google/bigbird-roberta-base (seed 0)                            | -        | 0.461794 | -         |         |
-| debertav3b_3s + bigbird-base_3s                                 | N        | 0.449995 | 0.43      |         |
-| debertav3b_3s + bigbird-base_3s                                 | Y        | 0.448971 | 0.43      |         |
-| debertav3b_3s + bigbird-base_s(42, 12)                          | N        | 0.449401 | 0.43      | 23      |
-| debertav3b_3s + bigbird-base_s(42, 12)                          | Y        | 0.448970 | 0.43      | 20      |
-| microsoft/deberta-v3-large (seed 42)                            | -        | 0.452084 | -         | -       |
-| microsoft/deberta-v3-large (seed 12)                            | -        | 0.453944 | -         | -       |
-| debertav3b_3s + bb-base_s(42, 12) + debertav3l_s42              | N        | 0.447958 | 0.43      | 18      |
-| debertav3b_3s + bb-base_s(42, 12) + debertav3l_s42              | Y        | 0.447135 | 0.43      | 16      |
-| debertav3b_3s + bb-base_s(42, 12) + debertav3l_s(42, 12)        | N        | 0.447214 | 0.43      | 13      |
-| debertav3b_3s + bb-base_s(42, 12) + debertav3l_s(42, 12)        | Y        | 0.446733 | 0.43      | 14      |
-| roberta-large (seed 42)                                         | -        | 0.457107 | -         | -       |
-| roberta-large (seed 12)                                         | -        | 0.456173 | _         | -       |
-| d_v3b_3s + bb-b_s(42, 12) + d_v3l_s(42, 12) + roberta_large_s42 | N        | 0.446579 | 0.43      | 6       |
-| d_v3b_3s + bb-b_s(42, 12) + d_v3l_s(42, 12) + roberta_large_s42 | Y        | 0.446012 | 0.43      | 9       |
-| d_v3b_3s + bb-b_s(42, 12) + d_v3l_s(42, 12) + rl_s(42, 12)      | N        | 0.446286 | 0.43      | 7       |
-| d_v3b_3s + bb-b_s(42, 12) + d_v3l_s(42, 12) + rl_s(42, 12)      | Y        | 0.445787 | 0.43      | 11      |
-| d_v3b_3s + bb-b_s42 + d_v3l_s(42, 12) + rl_s(42, 12)            | N        | 0.445981 | 0.43      | 8       |
-| d_v3b_3s + bb-b_s42 + d_v3l_s(42, 12) + rl_s(42, 12)            | Y        | 0.445788 | -         | -       |
+
+Public LB: 177th  
+Private LB: 203rd (Bronzes Medal)
+
+## What works
+> - Differential learning rates
+> - Layer-wise learning rate decay
+> - Cosine scheduler with 25% warmup of the first epoch (about 5% of all steps)
+> - Reinitialzing last layer
+> - Multi-sample dropout
+> - Mean pooling on longformer
+> - Concatnated attention head with mean pooling on others architectures
+> - AWP
+> - Pseudo labelling
+> - Seeds blending
+> - Mixing different max_len ensemble models
+
+## What did not work
+> - Gradient clipping
+> - Ranger21 
+> - Madgrad and MirrorMadGrad
+> - Freeze some layers
+> - SWA
+# Models
+| Models                                   | CV       | Public LB | Private LB |
+| ---------------------------------------- | -------- | --------- | ---------- |
+| microsoft/deberta-v3-base (seed 42)      | 0.452696 | 0.44      |            |
+| microsoft/deberta-v3-base (seed 12)      | 0.453501 | 0.44      |            |
+| microsoft/deberta-v3-base (seed 0)       | 0.45297  | 0.44      |            |
+| microsoft/deberta-v3-base (seed 42pl1)   | 0.451444 | -         |            |
+| microsoft/deberta-v3-base (seed 12pl1)   | 0.452189 | -         |            |
+| google/bigbird-roberta-base (seed 42)    | 0.460883 | 0.44      |            |
+| google/bigbird-roberta-base (seed 12)    | 0.461839 | 0.44      |            |
+| google/bigbird-roberta-base (seed 0)     | 0.461794 | -         |            |
+| google/bigbird-roberta-base (seed 42pl1) | 0.460131 | -         |            |
+| microsoft/deberta-v3-large (seed 42)     | 0.452084 | -         |            |
+| microsoft/deberta-v3-large (seed 12)     | 0.453944 | -         |            |
+| microsoft/deberta-v3-large (seed 0)      | 0.45297  | -         |            |
+| microsoft/deberta-v3-large (seed 42pl1)  | 0.45039  | -         |            |
+| microsoft/deberta-v3-large (seed 12pl1)  | 0.451133 | -         |            |
+| roberta-large (seed 42)                  | 0.457107 | -         |            |
+| roberta-large (seed 12)                  | 0.456173 | _         |            |
+| roberta-large (seed 0)                   | 0.456481 | _         |            |
+| roberta-large (seed 42pl1)               | 0.457107 | -         |            |
+| roberta-large (seed 12pl1)               | 0.456173 | _         |            |
+| allenai/longformer-large-4096 (seed 42)  | 0.45473  | _         |            |
+| allenai/longformer-large-4096 (seed 12)  | 0.453414 | _         |            |
+
+pl1: pseudo-labels 1 round
+
+<!-- ![](misc/models_ensembling_diagram.jpeg) -->
+
+# Notebook
+These notebooks can run on google colab by using your kaggle api and google drive.
+1. [fb_ell_trainb](notebook/fb_ell_trainnb.ipynb) &rarr; train model.
+1. [fb_ell_mk_pseudo_label](notebook/fb_ell_trainnb_mk_pseudo_label.ipynb) &rarr; generate pseudo-labels in leak-free manner. (using subset of the first feedback competitions)
+1. [fb_ell_pretrain_pseudo_label](notebook/fb_ell_trainnb_pretrain_pseudo_label.ipynb) &rarr; pretrain model on generated pseudo-labels.
+1. [fb_all_finetune_pseudo_label](notebook/fb_ell_trainnb_finetune_pseudo_label.ipynb) &rarr; finetune the  pretrained models.
+1. [fb_ell_cal_cv_nb](notebook/fb_ell_cal_cv_nb.ipynb) &rarr; generate out of fold prediction and calculate ensembled models score.
+1. inference notebook &rarr; coming soon

@@ -616,7 +616,7 @@
     - CV is not bad comparing to the other architectures.
     - It did not contribute to ensembled models, perhaps, because it did not introduce any diversities.
 
-- After trained and tried many models, this should be final submission modelS
+- After trained and tried many models, this should be final submission modelS (**SELECTED**)
     - it comprised of 14 models, 5 different architectures.
         - **deberta-v3-base 3 seeds (42, 12, 0)**
             - 42 and 12 are pseudo-labels 1 round trained models
@@ -630,5 +630,48 @@
         - **roberta-large 3 seeds (42, 12, 0)**
             - seed 42 is pseudo-labels, trained 12 but did not improve cv
         - **longformer-large 2 seeds (42, 12)**
-    - Ensembled all models with simple mean: ***0.445133***
-    - Weighed ensembled: ***0.4450627***
+    - Ensembled all models with simple mean CV: ***0.445133***
+    - Weighed ensembled CV: ***0.4450627*** 
+    - (11/30) 2nd best submission
+
+# 11/29
+
+- Last day before deadline. (30 November 2022 11:59 UTC)
+
+- Try to finish exp 64s42 2nd round (CU left on colab)
+    - deberta-v3-base seed 42
+    - pretrained on different subset of fb1 data 
+    - Even though it get a decent score, it does not improve cv when ensembled   
+
+- Last submission (**SELECTED**)
+    - included 21 models, 5 different architectures.
+        - **deberta-v3-base 3 seeds (42, 12, 0)**
+        - **deberta-v3-base pseudo-labels 2 seeds (42, 12)**
+        - **deberta-v3-large 3 seeds (42, 12, 0)**
+        - **deberta-v3-large pseudo-labels 2 seeds  (42 ,12)**
+        - **bigbird-roberta-base 3 seeds (42, 12, 0)**
+        - **bigbird-roberta-base pseudo-labels 1 seed (42)**
+        - **roberta-large 3 seeds (42, 12, 0)**
+        - **roberta-large pseudo-labels 2 seeds (42, 12)**
+        - **longformer-large-4096 2 seeds (42, 12)**
+
+  - Weighted ensembled CV: **0.4449692**
+  - (11/30) 3rd best submission
+
+# 11/30
+
+- Competition ended.
+
+- Public LB Rank is 178th and Private LB Rank is 203rd.
+
+- Best submission (Did not select)
+    - Included 10 models, 4 different architectures.
+        - **deberta-v3-base 2 seeds (12, 0)**
+        - **deberta-v3-base pseudo-labels seed 42**
+        - **bigbird-roberta-base pseudo-labels seed 42**
+        - **deberta-v3-large 2 seeds (42, 12)**
+        - **deberta-v3-large pseudo-labels seed 42**
+        - **roberta-large 2 seeds (42, 12)**
+        - **longformer-large seed 12**
+
+    - Weighted ensembled CV: **0.4454052**
