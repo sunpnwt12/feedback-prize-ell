@@ -616,12 +616,12 @@
     - CV is not bad comparing to the other architectures.
     - It did not contribute to ensembled models, perhaps, because it did not introduce any diversities.
 
-- After trained and tried many models, this should be final submission modelS (**SELECTED**)
+- after trained and tried many models, this should be final submission models (**selected**)
     - it comprised of 14 models, 5 different architectures.
         - **deberta-v3-base 3 seeds (42, 12, 0)**
             - 42 and 12 are pseudo-labels 1 round trained models
         - **deberta-v3-large 3 seeds (42, 12, 0)**
-            - this seed 0 is a little bit unique from others, since I accidently spilted thte data with one-hot encoded (the mentioned fix one)
+            - this seed 0 is a little bit unique from others, since i accidently spilted thte data with one-hot encoded (the mentioned fix one)
         - **deberta-v3-large 2 seeds (42, 12)**
             - these models are pseudo-labels 1 round trained models
             - mixed them with the original one as it imporved the score
@@ -630,9 +630,11 @@
         - **roberta-large 3 seeds (42, 12, 0)**
             - seed 42 is pseudo-labels, trained 12 but did not improve cv
         - **longformer-large 2 seeds (42, 12)**
-    - Ensembled all models with simple mean CV: ***0.445133***
-    - Weighed ensembled CV: ***0.4450627*** 
+    - ensembled all models with simple mean cv: ***0.445133***
+    - weighed ensembled cv: ***0.4450627*** 
     - (11/30) 2nd best submission
+    - public lb: 0.437602
+    - private lb: 0.436404
 
 # 11/29
 
@@ -657,6 +659,8 @@
 
   - Weighted ensembled CV: **0.4449692**
   - (11/30) 3rd best submission
+  - Public LB: 0.437734
+  - Private LB: 0.436439
 
 # 11/30
 
@@ -675,3 +679,5 @@
         - **longformer-large seed 12**
 
     - Weighted ensembled CV: **0.4454052**
+    - Public LB: 0.437664
+    - Private LB: 0.436382
