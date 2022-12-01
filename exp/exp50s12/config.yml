@@ -1,0 +1,70 @@
+accumulate_step: 1
+adv_eps: 0.001
+adv_lr: 2.0e-05
+awp_start_epoch: 1
+batch_scheduler: true
+bb_lr: 1.0e-05
+concat_pooling_last: 4
+data_path: /content/data
+dry_run: true
+dynamic_max_len: false
+exp: true
+exp_num: 50s12f0
+grad_clip: false
+grad_max_norm: 10
+gradient_checkpointing: true
+ll_lr: 2.0e-05
+llrd: 0.9
+loss_beta: 1.0
+model_name: microsoft/deberta-v3-large
+multi_dropout: true
+multi_dropout_p:
+- 0.3
+- 0.3
+- 0.3
+- 0.3
+- 0.3
+num_batch: 2
+num_epochs: 4
+num_folds: 4
+num_labels: 6
+optim_eps: 1.0e-06
+optimizer: adamw
+pooling_strategy_list:
+- concat_attn_mean_pooling
+- concat_attn_mean_pooling
+- concat_attn_mean_pooling
+- concat_attn_mean_pooling
+reinit_last_layers: 1
+reinit_method: null
+save_path: /content/drive/MyDrive/Colab Notebooks/kaggle/fb3/results/exp50s12
+scheduler: cosine_warmup
+seed: 12
+static_max_len_list:
+- 1024
+- 1024
+- 1024
+- 1024
+swa_anneal_strat: cos
+swa_lr: 1.0e-06
+swa_start_step_ratio: 0.112
+target_cols:
+- cohesion
+- syntax
+- vocabulary
+- phraseology
+- grammar
+- conventions
+train_fold_list:
+- 0
+- 1
+- 2
+- 3
+use_apex: true
+use_awp: true
+use_ln: false
+use_swa: false
+verbose_step: 40
+warmup_epoch: 0.25
+weight_decay: 0.01
+wlp_pooling_start: 0

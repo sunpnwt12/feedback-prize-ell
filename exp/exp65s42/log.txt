@@ -1,0 +1,733 @@
+Date: 2022-11-28 14:37:45.034396+07:00 (GMT+7)
+Mode: CV_MODE
+Train_on: cuda, (AMP: True, GradScaler: True)
+Model: microsoft/deberta-v3-small
+Model_config: DebertaV2Config {
+  "_name_or_path": "microsoft/deberta-v3-small",
+  "attention_probs_dropout_prob": 0.0,
+  "hidden_act": "gelu",
+  "hidden_dropout": 0.0,
+  "hidden_dropout_prob": 0.0,
+  "hidden_size": 768,
+  "initializer_range": 0.02,
+  "intermediate_size": 3072,
+  "layer_norm_eps": 1e-07,
+  "max_position_embeddings": 512,
+  "max_relative_positions": -1,
+  "model_type": "deberta-v2",
+  "norm_rel_ebd": "layer_norm",
+  "num_attention_heads": 12,
+  "num_hidden_layers": 6,
+  "output_hidden_states": true,
+  "pad_token_id": 0,
+  "pooler_dropout": 0.0,
+  "pooler_hidden_act": "gelu",
+  "pooler_hidden_size": 768,
+  "pos_att_type": [
+    "p2c",
+    "c2p"
+  ],
+  "position_biased_input": false,
+  "position_buckets": 256,
+  "relative_attention": true,
+  "share_att_key": true,
+  "transformers_version": "4.20.1",
+  "type_vocab_size": 0,
+  "vocab_size": 128100
+}
+
+Pooling_strategy: concat_attn_mean_pooling
+Initailzation: None
+AWP: True (adv_lr: 2e-05, adv_eps: 0.001) at epoch 1
+SWA: False (swa_lr: 1e-06, anneal_strat: cos) at last 0.112
+Multi_sample_dropout: True (p: [0.3, 0.3, 0.3, 0.3, 0.3])
+Loss_fn: SmoothL1Loss()
+Optimizer: AdamW
+LR: (Backbone: 2e-05, LowerLayer: 3e-05)
+LR_Scheduler: get_cosine_schedule_with_warmup {'num_warmup_steps': 91, 'num_training_steps': 1464}
+Grad_clip_norm: False (max_norm: 10)
+Number_of_batches: 8 (Gradient_accumulate: 1)
+max_len: 768
+
+TRAIN_LOOP
+AWP_ACTIVATED
+[TRAIN F0] EPOCH: 1/4 | STEP: 000/366 | LOSS: 2.57017 (2.57017) | LR: 0.00000033 | TIME: 0:00:04 |
+[TRAIN F0] EPOCH: 1/4 | STEP: 040/366 | LOSS: 0.40369 (1.83083) | LR: 0.00001352 | TIME: 0:01:01 |
+[TRAIN F0] EPOCH: 1/4 | STEP: 080/366 | LOSS: 0.18132 (1.05928) | LR: 0.00002670 | TIME: 0:01:57 |
+[TRAIN F0] EPOCH: 1/4 | STEP: 120/366 | LOSS: 0.12774 (0.76390) | LR: 0.00002996 | TIME: 0:02:54 |
+[TRAIN F0] EPOCH: 1/4 | STEP: 160/366 | LOSS: 0.11761 (0.61511) | LR: 0.00002981 | TIME: 0:03:52 |
+[TRAIN F0] EPOCH: 1/4 | STEP: 200/366 | LOSS: 0.19376 (0.52094) | LR: 0.00002953 | TIME: 0:04:50 |
+[TRAIN F0] EPOCH: 1/4 | STEP: 240/366 | LOSS: 0.13740 (0.45646) | LR: 0.00002913 | TIME: 0:05:47 |
+[TRAIN F0] EPOCH: 1/4 | STEP: 280/366 | LOSS: 0.11639 (0.41025) | LR: 0.00002860 | TIME: 0:06:45 |
+[TRAIN F0] EPOCH: 1/4 | STEP: 320/366 | LOSS: 0.10258 (0.37656) | LR: 0.00002797 | TIME: 0:07:43 |
+[TRAIN F0] EPOCH: 1/4 | STEP: 360/366 | LOSS: 0.15959 (0.35029) | LR: 0.00002723 | TIME: 0:08:39 |
+[TRAIN F0] EPOCH: 1/4 | STEP: 365/366 | LOSS: 0.13921 (0.34755) | LR: 0.00002713 | TIME: 0:08:46 |
+
+VALID_LOOP
+[VALID F0] EPOCH: 1/4 | STEP: 000/123 | LOSS: 0.09286 (0.09286) | TIME: 0:00:01 |
+[VALID F0] EPOCH: 1/4 | STEP: 040/123 | LOSS: 0.09115 (0.11467) | TIME: 0:00:09 |
+[VALID F0] EPOCH: 1/4 | STEP: 080/123 | LOSS: 0.09614 (0.11463) | TIME: 0:00:18 |
+[VALID F0] EPOCH: 1/4 | STEP: 120/123 | LOSS: 0.11621 (0.11570) | TIME: 0:00:27 |
+[VALID F0] EPOCH: 1/4 | STEP: 122/123 | LOSS: 0.08681 (0.11531) | TIME: 0:00:27 |
+
+--------------------
+EPOCH: 1/4 SUMMARY
+--------------------
+| EPOCH   |   TRAIN_LOSS |   VALID_LOSS |   MCRMSE | COLS                                          | TIME    |
+|---------|--------------|--------------|----------|-----------------------------------------------|---------|
+| 1/4     |      0.34755 |      0.11531 |  0.48081 | 0.536 | 0.466 | 0.443 | 0.473 | 0.513 | 0.454 | 0:09:13 |
+
+
+[SAVED] EPOCH: 1 | MCRMSE: 0.4808124005794525
+
+TRAIN_LOOP
+AWP_ACTIVATED
+[TRAIN F0] EPOCH: 2/4 | STEP: 000/366 | LOSS: 0.12371 (0.12371) | LR: 0.00002711 | TIME: 0:00:02 |
+[TRAIN F0] EPOCH: 2/4 | STEP: 040/366 | LOSS: 0.06737 (0.12541) | LR: 0.00002625 | TIME: 0:01:00 |
+[TRAIN F0] EPOCH: 2/4 | STEP: 080/366 | LOSS: 0.10198 (0.12624) | LR: 0.00002529 | TIME: 0:01:58 |
+[TRAIN F0] EPOCH: 2/4 | STEP: 120/366 | LOSS: 0.10762 (0.12577) | LR: 0.00002425 | TIME: 0:02:53 |
+[TRAIN F0] EPOCH: 2/4 | STEP: 160/366 | LOSS: 0.13824 (0.12491) | LR: 0.00002313 | TIME: 0:03:50 |
+[TRAIN F0] EPOCH: 2/4 | STEP: 200/366 | LOSS: 0.10236 (0.12286) | LR: 0.00002195 | TIME: 0:04:48 |
+[TRAIN F0] EPOCH: 2/4 | STEP: 240/366 | LOSS: 0.08319 (0.12190) | LR: 0.00002070 | TIME: 0:05:45 |
+[TRAIN F0] EPOCH: 2/4 | STEP: 280/366 | LOSS: 0.13293 (0.12136) | LR: 0.00001941 | TIME: 0:06:41 |
+[TRAIN F0] EPOCH: 2/4 | STEP: 320/366 | LOSS: 0.08601 (0.12133) | LR: 0.00001808 | TIME: 0:07:40 |
+[TRAIN F0] EPOCH: 2/4 | STEP: 360/366 | LOSS: 0.14617 (0.12160) | LR: 0.00001673 | TIME: 0:08:38 |
+[TRAIN F0] EPOCH: 2/4 | STEP: 365/366 | LOSS: 0.07851 (0.12157) | LR: 0.00001656 | TIME: 0:08:45 |
+
+VALID_LOOP
+[VALID F0] EPOCH: 2/4 | STEP: 000/123 | LOSS: 0.05937 (0.05937) | TIME: 0:00:01 |
+[VALID F0] EPOCH: 2/4 | STEP: 040/123 | LOSS: 0.07864 (0.10448) | TIME: 0:00:09 |
+[VALID F0] EPOCH: 2/4 | STEP: 080/123 | LOSS: 0.10118 (0.10508) | TIME: 0:00:18 |
+[VALID F0] EPOCH: 2/4 | STEP: 120/123 | LOSS: 0.10401 (0.10712) | TIME: 0:00:27 |
+[VALID F0] EPOCH: 2/4 | STEP: 122/123 | LOSS: 0.12472 (0.10702) | TIME: 0:00:27 |
+
+--------------------
+EPOCH: 2/4 SUMMARY
+--------------------
+| EPOCH   |   TRAIN_LOSS |   VALID_LOSS |   MCRMSE | COLS                                          | TIME    |
+|---------|--------------|--------------|----------|-----------------------------------------------|---------|
+| 2/4     |      0.12157 |      0.10702 |  0.46323 | 0.498 | 0.453 | 0.434 | 0.457 | 0.484 | 0.452 | 0:09:12 |
+
+
+[SAVED] EPOCH: 2 | MCRMSE: 0.4632321894168854
+
+TRAIN_LOOP
+AWP_ACTIVATED
+[TRAIN F0] EPOCH: 3/4 | STEP: 000/366 | LOSS: 0.10911 (0.10911) | LR: 0.00001652 | TIME: 0:00:02 |
+[TRAIN F0] EPOCH: 3/4 | STEP: 040/366 | LOSS: 0.14563 (0.11000) | LR: 0.00001515 | TIME: 0:01:00 |
+[TRAIN F0] EPOCH: 3/4 | STEP: 080/366 | LOSS: 0.10426 (0.11026) | LR: 0.00001378 | TIME: 0:01:58 |
+[TRAIN F0] EPOCH: 3/4 | STEP: 120/366 | LOSS: 0.09849 (0.10977) | LR: 0.00001242 | TIME: 0:02:56 |
+[TRAIN F0] EPOCH: 3/4 | STEP: 160/366 | LOSS: 0.11988 (0.11095) | LR: 0.00001108 | TIME: 0:03:55 |
+[TRAIN F0] EPOCH: 3/4 | STEP: 200/366 | LOSS: 0.08379 (0.10907) | LR: 0.00000977 | TIME: 0:04:52 |
+[TRAIN F0] EPOCH: 3/4 | STEP: 240/366 | LOSS: 0.11178 (0.10807) | LR: 0.00000851 | TIME: 0:05:47 |
+[TRAIN F0] EPOCH: 3/4 | STEP: 280/366 | LOSS: 0.07647 (0.10788) | LR: 0.00000730 | TIME: 0:06:43 |
+[TRAIN F0] EPOCH: 3/4 | STEP: 320/366 | LOSS: 0.06705 (0.10721) | LR: 0.00000616 | TIME: 0:07:40 |
+[TRAIN F0] EPOCH: 3/4 | STEP: 360/366 | LOSS: 0.08996 (0.10706) | LR: 0.00000509 | TIME: 0:08:38 |
+[TRAIN F0] EPOCH: 3/4 | STEP: 365/366 | LOSS: 0.12106 (0.10707) | LR: 0.00000496 | TIME: 0:08:44 |
+
+VALID_LOOP
+[VALID F0] EPOCH: 3/4 | STEP: 000/123 | LOSS: 0.06001 (0.06001) | TIME: 0:00:01 |
+[VALID F0] EPOCH: 3/4 | STEP: 040/123 | LOSS: 0.07666 (0.10296) | TIME: 0:00:09 |
+[VALID F0] EPOCH: 3/4 | STEP: 080/123 | LOSS: 0.09134 (0.10341) | TIME: 0:00:18 |
+[VALID F0] EPOCH: 3/4 | STEP: 120/123 | LOSS: 0.09605 (0.10485) | TIME: 0:00:27 |
+[VALID F0] EPOCH: 3/4 | STEP: 122/123 | LOSS: 0.10482 (0.10460) | TIME: 0:00:27 |
+
+--------------------
+EPOCH: 3/4 SUMMARY
+--------------------
+| EPOCH   |   TRAIN_LOSS |   VALID_LOSS |   MCRMSE | COLS                                          | TIME    |
+|---------|--------------|--------------|----------|-----------------------------------------------|---------|
+| 3/4     |      0.10707 |       0.1046 |  0.45787 | 0.496 | 0.444 | 0.424 | 0.466 | 0.480 | 0.438 | 0:09:12 |
+
+
+[SAVED] EPOCH: 3 | MCRMSE: 0.4578728675842285
+
+TRAIN_LOOP
+AWP_ACTIVATED
+[TRAIN F0] EPOCH: 4/4 | STEP: 000/366 | LOSS: 0.10036 (0.10036) | LR: 0.00000493 | TIME: 0:00:02 |
+[TRAIN F0] EPOCH: 4/4 | STEP: 040/366 | LOSS: 0.07824 (0.10257) | LR: 0.00000396 | TIME: 0:00:59 |
+[TRAIN F0] EPOCH: 4/4 | STEP: 080/366 | LOSS: 0.09667 (0.09980) | LR: 0.00000308 | TIME: 0:01:56 |
+[TRAIN F0] EPOCH: 4/4 | STEP: 120/366 | LOSS: 0.10803 (0.09959) | LR: 0.00000230 | TIME: 0:02:54 |
+[TRAIN F0] EPOCH: 4/4 | STEP: 160/366 | LOSS: 0.09400 (0.09731) | LR: 0.00000162 | TIME: 0:03:49 |
+[TRAIN F0] EPOCH: 4/4 | STEP: 200/366 | LOSS: 0.09085 (0.09761) | LR: 0.00000106 | TIME: 0:04:48 |
+[TRAIN F0] EPOCH: 4/4 | STEP: 240/366 | LOSS: 0.07941 (0.09816) | LR: 0.00000061 | TIME: 0:05:46 |
+[TRAIN F0] EPOCH: 4/4 | STEP: 280/366 | LOSS: 0.11106 (0.09821) | LR: 0.00000028 | TIME: 0:06:43 |
+[TRAIN F0] EPOCH: 4/4 | STEP: 320/366 | LOSS: 0.10293 (0.09903) | LR: 0.00000008 | TIME: 0:07:42 |
+[TRAIN F0] EPOCH: 4/4 | STEP: 360/366 | LOSS: 0.11424 (0.09923) | LR: 0.00000000 | TIME: 0:08:40 |
+[TRAIN F0] EPOCH: 4/4 | STEP: 365/366 | LOSS: 0.09096 (0.09918) | LR: 0.00000000 | TIME: 0:08:47 |
+
+VALID_LOOP
+[VALID F0] EPOCH: 4/4 | STEP: 000/123 | LOSS: 0.06063 (0.06063) | TIME: 0:00:01 |
+[VALID F0] EPOCH: 4/4 | STEP: 040/123 | LOSS: 0.07537 (0.10233) | TIME: 0:00:09 |
+[VALID F0] EPOCH: 4/4 | STEP: 080/123 | LOSS: 0.09110 (0.10242) | TIME: 0:00:18 |
+[VALID F0] EPOCH: 4/4 | STEP: 120/123 | LOSS: 0.09750 (0.10373) | TIME: 0:00:27 |
+[VALID F0] EPOCH: 4/4 | STEP: 122/123 | LOSS: 0.10275 (0.10347) | TIME: 0:00:27 |
+
+--------------------
+EPOCH: 4/4 SUMMARY
+--------------------
+| EPOCH   |   TRAIN_LOSS |   VALID_LOSS |   MCRMSE | COLS                                          | TIME    |
+|---------|--------------|--------------|----------|-----------------------------------------------|---------|
+| 4/4     |      0.09918 |      0.10347 |  0.45532 | 0.495 | 0.446 | 0.418 | 0.456 | 0.479 | 0.438 | 0:09:14 |
+
+
+[SAVED] EPOCH: 4 | MCRMSE: 0.4553224742412567
+
+
+----------------------------------- FOLD 0 RESULT -----------------------------------
+  MCRMSE    cohesion    syntax    vocabulary    phraseology    grammar    conventions
+--------  ----------  --------  ------------  -------------  ---------  -------------
+ 0.45532     0.49484   0.44591       0.41779          0.456    0.47912        0.43827
+
+################################### END OF FOlD 0 ###################################
+
+
+Date: 2022-11-28 15:14:48.428963+07:00 (GMT+7)
+Mode: CV_MODE
+Train_on: cuda, (AMP: True, GradScaler: True)
+Model: microsoft/deberta-v3-small
+Model_config: DebertaV2Config {
+  "_name_or_path": "microsoft/deberta-v3-small",
+  "attention_probs_dropout_prob": 0.0,
+  "hidden_act": "gelu",
+  "hidden_dropout": 0.0,
+  "hidden_dropout_prob": 0.0,
+  "hidden_size": 768,
+  "initializer_range": 0.02,
+  "intermediate_size": 3072,
+  "layer_norm_eps": 1e-07,
+  "max_position_embeddings": 512,
+  "max_relative_positions": -1,
+  "model_type": "deberta-v2",
+  "norm_rel_ebd": "layer_norm",
+  "num_attention_heads": 12,
+  "num_hidden_layers": 6,
+  "output_hidden_states": true,
+  "pad_token_id": 0,
+  "pooler_dropout": 0.0,
+  "pooler_hidden_act": "gelu",
+  "pooler_hidden_size": 768,
+  "pos_att_type": [
+    "p2c",
+    "c2p"
+  ],
+  "position_biased_input": false,
+  "position_buckets": 256,
+  "relative_attention": true,
+  "share_att_key": true,
+  "transformers_version": "4.20.1",
+  "type_vocab_size": 0,
+  "vocab_size": 128100
+}
+
+Pooling_strategy: concat_attn_mean_pooling
+Initailzation: None
+AWP: True (adv_lr: 2e-05, adv_eps: 0.001) at epoch 1
+SWA: False (swa_lr: 1e-06, anneal_strat: cos) at last 0.112
+Multi_sample_dropout: True (p: [0.3, 0.3, 0.3, 0.3, 0.3])
+Loss_fn: SmoothL1Loss()
+Optimizer: AdamW
+LR: (Backbone: 2e-05, LowerLayer: 3e-05)
+LR_Scheduler: get_cosine_schedule_with_warmup {'num_warmup_steps': 91, 'num_training_steps': 1464}
+Grad_clip_norm: False (max_norm: 10)
+Number_of_batches: 8 (Gradient_accumulate: 1)
+max_len: 768
+
+TRAIN_LOOP
+AWP_ACTIVATED
+[TRAIN F1] EPOCH: 1/4 | STEP: 000/366 | LOSS: 2.85206 (2.85206) | LR: 0.00000033 | TIME: 0:00:01 |
+[TRAIN F1] EPOCH: 1/4 | STEP: 040/366 | LOSS: 0.39242 (1.87674) | LR: 0.00001352 | TIME: 0:00:59 |
+[TRAIN F1] EPOCH: 1/4 | STEP: 080/366 | LOSS: 0.20066 (1.07403) | LR: 0.00002670 | TIME: 0:01:58 |
+[TRAIN F1] EPOCH: 1/4 | STEP: 120/366 | LOSS: 0.13063 (0.77614) | LR: 0.00002996 | TIME: 0:02:55 |
+[TRAIN F1] EPOCH: 1/4 | STEP: 160/366 | LOSS: 0.10195 (0.62182) | LR: 0.00002981 | TIME: 0:03:54 |
+[TRAIN F1] EPOCH: 1/4 | STEP: 200/366 | LOSS: 0.09418 (0.52875) | LR: 0.00002953 | TIME: 0:04:53 |
+[TRAIN F1] EPOCH: 1/4 | STEP: 240/366 | LOSS: 0.13519 (0.46455) | LR: 0.00002913 | TIME: 0:05:51 |
+[TRAIN F1] EPOCH: 1/4 | STEP: 280/366 | LOSS: 0.09619 (0.41813) | LR: 0.00002860 | TIME: 0:06:45 |
+[TRAIN F1] EPOCH: 1/4 | STEP: 320/366 | LOSS: 0.18862 (0.38362) | LR: 0.00002797 | TIME: 0:07:41 |
+[TRAIN F1] EPOCH: 1/4 | STEP: 360/366 | LOSS: 0.10033 (0.35626) | LR: 0.00002723 | TIME: 0:08:39 |
+[TRAIN F1] EPOCH: 1/4 | STEP: 365/366 | LOSS: 0.09845 (0.35334) | LR: 0.00002713 | TIME: 0:08:47 |
+
+VALID_LOOP
+[VALID F1] EPOCH: 1/4 | STEP: 000/123 | LOSS: 0.06751 (0.06751) | TIME: 0:00:01 |
+[VALID F1] EPOCH: 1/4 | STEP: 040/123 | LOSS: 0.10693 (0.12344) | TIME: 0:00:10 |
+[VALID F1] EPOCH: 1/4 | STEP: 080/123 | LOSS: 0.09864 (0.12073) | TIME: 0:00:18 |
+[VALID F1] EPOCH: 1/4 | STEP: 120/123 | LOSS: 0.08981 (0.11748) | TIME: 0:00:27 |
+[VALID F1] EPOCH: 1/4 | STEP: 122/123 | LOSS: 0.07440 (0.11725) | TIME: 0:00:27 |
+
+--------------------
+EPOCH: 1/4 SUMMARY
+--------------------
+| EPOCH   |   TRAIN_LOSS |   VALID_LOSS |   MCRMSE | COLS                                          | TIME    |
+|---------|--------------|--------------|----------|-----------------------------------------------|---------|
+| 1/4     |      0.35334 |      0.11725 |   0.4856 | 0.526 | 0.461 | 0.447 | 0.478 | 0.531 | 0.471 | 0:09:14 |
+
+
+[SAVED] EPOCH: 1 | MCRMSE: 0.4856014549732208
+
+TRAIN_LOOP
+AWP_ACTIVATED
+[TRAIN F1] EPOCH: 2/4 | STEP: 000/366 | LOSS: 0.13229 (0.13229) | LR: 0.00002711 | TIME: 0:00:02 |
+[TRAIN F1] EPOCH: 2/4 | STEP: 040/366 | LOSS: 0.10282 (0.12896) | LR: 0.00002625 | TIME: 0:01:01 |
+[TRAIN F1] EPOCH: 2/4 | STEP: 080/366 | LOSS: 0.13554 (0.12351) | LR: 0.00002529 | TIME: 0:02:00 |
+[TRAIN F1] EPOCH: 2/4 | STEP: 120/366 | LOSS: 0.15589 (0.12635) | LR: 0.00002425 | TIME: 0:02:58 |
+[TRAIN F1] EPOCH: 2/4 | STEP: 160/366 | LOSS: 0.08589 (0.12619) | LR: 0.00002313 | TIME: 0:03:56 |
+[TRAIN F1] EPOCH: 2/4 | STEP: 200/366 | LOSS: 0.10841 (0.12423) | LR: 0.00002195 | TIME: 0:04:53 |
+[TRAIN F1] EPOCH: 2/4 | STEP: 240/366 | LOSS: 0.12494 (0.12350) | LR: 0.00002070 | TIME: 0:05:51 |
+[TRAIN F1] EPOCH: 2/4 | STEP: 280/366 | LOSS: 0.11185 (0.12431) | LR: 0.00001941 | TIME: 0:06:47 |
+[TRAIN F1] EPOCH: 2/4 | STEP: 320/366 | LOSS: 0.13251 (0.12426) | LR: 0.00001808 | TIME: 0:07:43 |
+[TRAIN F1] EPOCH: 2/4 | STEP: 360/366 | LOSS: 0.12502 (0.12299) | LR: 0.00001673 | TIME: 0:08:42 |
+[TRAIN F1] EPOCH: 2/4 | STEP: 365/366 | LOSS: 0.07769 (0.12287) | LR: 0.00001656 | TIME: 0:08:49 |
+
+VALID_LOOP
+[VALID F1] EPOCH: 2/4 | STEP: 000/123 | LOSS: 0.12848 (0.12848) | TIME: 0:00:01 |
+[VALID F1] EPOCH: 2/4 | STEP: 040/123 | LOSS: 0.07791 (0.12556) | TIME: 0:00:09 |
+[VALID F1] EPOCH: 2/4 | STEP: 080/123 | LOSS: 0.12052 (0.13020) | TIME: 0:00:18 |
+[VALID F1] EPOCH: 2/4 | STEP: 120/123 | LOSS: 0.12481 (0.13264) | TIME: 0:00:27 |
+[VALID F1] EPOCH: 2/4 | STEP: 122/123 | LOSS: 0.08503 (0.13251) | TIME: 0:00:27 |
+
+--------------------
+EPOCH: 2/4 SUMMARY
+--------------------
+| EPOCH   |   TRAIN_LOSS |   VALID_LOSS |   MCRMSE | COLS                                          | TIME    |
+|---------|--------------|--------------|----------|-----------------------------------------------|---------|
+| 2/4     |      0.12287 |      0.13251 |  0.51641 | 0.503 | 0.472 | 0.475 | 0.564 | 0.568 | 0.517 | 0:09:16 |
+
+TRAIN_LOOP
+AWP_ACTIVATED
+[TRAIN F1] EPOCH: 3/4 | STEP: 000/366 | LOSS: 0.09665 (0.09665) | LR: 0.00001652 | TIME: 0:00:02 |
+[TRAIN F1] EPOCH: 3/4 | STEP: 040/366 | LOSS: 0.10897 (0.11724) | LR: 0.00001515 | TIME: 0:00:58 |
+[TRAIN F1] EPOCH: 3/4 | STEP: 080/366 | LOSS: 0.10941 (0.11128) | LR: 0.00001378 | TIME: 0:01:55 |
+[TRAIN F1] EPOCH: 3/4 | STEP: 120/366 | LOSS: 0.09979 (0.10831) | LR: 0.00001242 | TIME: 0:02:55 |
+[TRAIN F1] EPOCH: 3/4 | STEP: 160/366 | LOSS: 0.07574 (0.10579) | LR: 0.00001108 | TIME: 0:03:54 |
+[TRAIN F1] EPOCH: 3/4 | STEP: 200/366 | LOSS: 0.11925 (0.10723) | LR: 0.00000977 | TIME: 0:04:50 |
+[TRAIN F1] EPOCH: 3/4 | STEP: 240/366 | LOSS: 0.09085 (0.10684) | LR: 0.00000851 | TIME: 0:05:48 |
+[TRAIN F1] EPOCH: 3/4 | STEP: 280/366 | LOSS: 0.10480 (0.10696) | LR: 0.00000730 | TIME: 0:06:45 |
+[TRAIN F1] EPOCH: 3/4 | STEP: 320/366 | LOSS: 0.05812 (0.10768) | LR: 0.00000616 | TIME: 0:07:41 |
+[TRAIN F1] EPOCH: 3/4 | STEP: 360/366 | LOSS: 0.12901 (0.10752) | LR: 0.00000509 | TIME: 0:08:38 |
+[TRAIN F1] EPOCH: 3/4 | STEP: 365/366 | LOSS: 0.10316 (0.10732) | LR: 0.00000496 | TIME: 0:08:45 |
+
+VALID_LOOP
+[VALID F1] EPOCH: 3/4 | STEP: 000/123 | LOSS: 0.09046 (0.09046) | TIME: 0:00:01 |
+[VALID F1] EPOCH: 3/4 | STEP: 040/123 | LOSS: 0.07570 (0.10905) | TIME: 0:00:09 |
+[VALID F1] EPOCH: 3/4 | STEP: 080/123 | LOSS: 0.10931 (0.10899) | TIME: 0:00:18 |
+[VALID F1] EPOCH: 3/4 | STEP: 120/123 | LOSS: 0.08952 (0.10877) | TIME: 0:00:27 |
+[VALID F1] EPOCH: 3/4 | STEP: 122/123 | LOSS: 0.04788 (0.10874) | TIME: 0:00:27 |
+
+--------------------
+EPOCH: 3/4 SUMMARY
+--------------------
+| EPOCH   |   TRAIN_LOSS |   VALID_LOSS |   MCRMSE | COLS                                          | TIME    |
+|---------|--------------|--------------|----------|-----------------------------------------------|---------|
+| 3/4     |      0.10732 |      0.10874 |  0.46719 | 0.498 | 0.455 | 0.435 | 0.463 | 0.494 | 0.459 | 0:09:12 |
+
+
+[SAVED] EPOCH: 3 | MCRMSE: 0.46718916296958923
+
+TRAIN_LOOP
+AWP_ACTIVATED
+[TRAIN F1] EPOCH: 4/4 | STEP: 000/366 | LOSS: 0.09704 (0.09704) | LR: 0.00000493 | TIME: 0:00:02 |
+[TRAIN F1] EPOCH: 4/4 | STEP: 040/366 | LOSS: 0.10571 (0.09627) | LR: 0.00000396 | TIME: 0:01:00 |
+[TRAIN F1] EPOCH: 4/4 | STEP: 080/366 | LOSS: 0.08304 (0.09683) | LR: 0.00000308 | TIME: 0:01:58 |
+[TRAIN F1] EPOCH: 4/4 | STEP: 120/366 | LOSS: 0.08653 (0.09581) | LR: 0.00000230 | TIME: 0:02:55 |
+[TRAIN F1] EPOCH: 4/4 | STEP: 160/366 | LOSS: 0.09812 (0.09785) | LR: 0.00000162 | TIME: 0:03:52 |
+[TRAIN F1] EPOCH: 4/4 | STEP: 200/366 | LOSS: 0.10330 (0.09736) | LR: 0.00000106 | TIME: 0:04:49 |
+[TRAIN F1] EPOCH: 4/4 | STEP: 240/366 | LOSS: 0.10736 (0.09637) | LR: 0.00000061 | TIME: 0:05:47 |
+[TRAIN F1] EPOCH: 4/4 | STEP: 280/366 | LOSS: 0.11824 (0.09653) | LR: 0.00000028 | TIME: 0:06:43 |
+[TRAIN F1] EPOCH: 4/4 | STEP: 320/366 | LOSS: 0.07988 (0.09700) | LR: 0.00000008 | TIME: 0:07:40 |
+[TRAIN F1] EPOCH: 4/4 | STEP: 360/366 | LOSS: 0.12829 (0.09711) | LR: 0.00000000 | TIME: 0:08:37 |
+[TRAIN F1] EPOCH: 4/4 | STEP: 365/366 | LOSS: 0.09229 (0.09716) | LR: 0.00000000 | TIME: 0:08:44 |
+
+VALID_LOOP
+[VALID F1] EPOCH: 4/4 | STEP: 000/123 | LOSS: 0.08302 (0.08302) | TIME: 0:00:01 |
+[VALID F1] EPOCH: 4/4 | STEP: 040/123 | LOSS: 0.07692 (0.10855) | TIME: 0:00:09 |
+[VALID F1] EPOCH: 4/4 | STEP: 080/123 | LOSS: 0.10851 (0.10785) | TIME: 0:00:18 |
+[VALID F1] EPOCH: 4/4 | STEP: 120/123 | LOSS: 0.08430 (0.10706) | TIME: 0:00:27 |
+[VALID F1] EPOCH: 4/4 | STEP: 122/123 | LOSS: 0.04730 (0.10703) | TIME: 0:00:27 |
+
+--------------------
+EPOCH: 4/4 SUMMARY
+--------------------
+| EPOCH   |   TRAIN_LOSS |   VALID_LOSS |   MCRMSE | COLS                                          | TIME    |
+|---------|--------------|--------------|----------|-----------------------------------------------|---------|
+| 4/4     |      0.09716 |      0.10703 |  0.46336 | 0.498 | 0.451 | 0.425 | 0.463 | 0.489 | 0.455 | 0:09:11 |
+
+
+[SAVED] EPOCH: 4 | MCRMSE: 0.4633577764034271
+
+
+----------------------------------- FOLD 1 RESULT -----------------------------------
+  MCRMSE    cohesion    syntax    vocabulary    phraseology    grammar    conventions
+--------  ----------  --------  ------------  -------------  ---------  -------------
+ 0.46336     0.49809   0.45136       0.42476        0.46255    0.48866        0.45472
+
+################################### END OF FOlD 1 ###################################
+
+
+Date: 2022-11-28 15:51:52.209067+07:00 (GMT+7)
+Mode: CV_MODE
+Train_on: cuda, (AMP: True, GradScaler: True)
+Model: microsoft/deberta-v3-small
+Model_config: DebertaV2Config {
+  "_name_or_path": "microsoft/deberta-v3-small",
+  "attention_probs_dropout_prob": 0.0,
+  "hidden_act": "gelu",
+  "hidden_dropout": 0.0,
+  "hidden_dropout_prob": 0.0,
+  "hidden_size": 768,
+  "initializer_range": 0.02,
+  "intermediate_size": 3072,
+  "layer_norm_eps": 1e-07,
+  "max_position_embeddings": 512,
+  "max_relative_positions": -1,
+  "model_type": "deberta-v2",
+  "norm_rel_ebd": "layer_norm",
+  "num_attention_heads": 12,
+  "num_hidden_layers": 6,
+  "output_hidden_states": true,
+  "pad_token_id": 0,
+  "pooler_dropout": 0.0,
+  "pooler_hidden_act": "gelu",
+  "pooler_hidden_size": 768,
+  "pos_att_type": [
+    "p2c",
+    "c2p"
+  ],
+  "position_biased_input": false,
+  "position_buckets": 256,
+  "relative_attention": true,
+  "share_att_key": true,
+  "transformers_version": "4.20.1",
+  "type_vocab_size": 0,
+  "vocab_size": 128100
+}
+
+Pooling_strategy: concat_attn_mean_pooling
+Initailzation: None
+AWP: True (adv_lr: 2e-05, adv_eps: 0.001) at epoch 1
+SWA: False (swa_lr: 1e-06, anneal_strat: cos) at last 0.112
+Multi_sample_dropout: True (p: [0.3, 0.3, 0.3, 0.3, 0.3])
+Loss_fn: SmoothL1Loss()
+Optimizer: AdamW
+LR: (Backbone: 2e-05, LowerLayer: 3e-05)
+LR_Scheduler: get_cosine_schedule_with_warmup {'num_warmup_steps': 91, 'num_training_steps': 1464}
+Grad_clip_norm: False (max_norm: 10)
+Number_of_batches: 8 (Gradient_accumulate: 1)
+max_len: 768
+
+TRAIN_LOOP
+AWP_ACTIVATED
+[TRAIN F2] EPOCH: 1/4 | STEP: 000/366 | LOSS: 2.28288 (2.28288) | LR: 0.00000033 | TIME: 0:00:02 |
+[TRAIN F2] EPOCH: 1/4 | STEP: 040/366 | LOSS: 0.42875 (1.84413) | LR: 0.00001352 | TIME: 0:01:03 |
+[TRAIN F2] EPOCH: 1/4 | STEP: 080/366 | LOSS: 0.25821 (1.04907) | LR: 0.00002670 | TIME: 0:02:03 |
+[TRAIN F2] EPOCH: 1/4 | STEP: 120/366 | LOSS: 0.13368 (0.75725) | LR: 0.00002996 | TIME: 0:03:02 |
+[TRAIN F2] EPOCH: 1/4 | STEP: 160/366 | LOSS: 0.12248 (0.60509) | LR: 0.00002981 | TIME: 0:03:58 |
+[TRAIN F2] EPOCH: 1/4 | STEP: 200/366 | LOSS: 0.14583 (0.51547) | LR: 0.00002953 | TIME: 0:04:58 |
+[TRAIN F2] EPOCH: 1/4 | STEP: 240/366 | LOSS: 0.09553 (0.45248) | LR: 0.00002913 | TIME: 0:05:55 |
+[TRAIN F2] EPOCH: 1/4 | STEP: 280/366 | LOSS: 0.10486 (0.40711) | LR: 0.00002860 | TIME: 0:06:51 |
+[TRAIN F2] EPOCH: 1/4 | STEP: 320/366 | LOSS: 0.14406 (0.37310) | LR: 0.00002797 | TIME: 0:07:49 |
+[TRAIN F2] EPOCH: 1/4 | STEP: 360/366 | LOSS: 0.15158 (0.34580) | LR: 0.00002723 | TIME: 0:08:45 |
+[TRAIN F2] EPOCH: 1/4 | STEP: 365/366 | LOSS: 0.18386 (0.34298) | LR: 0.00002713 | TIME: 0:08:52 |
+
+VALID_LOOP
+[VALID F2] EPOCH: 1/4 | STEP: 000/123 | LOSS: 0.16368 (0.16368) | TIME: 0:00:01 |
+[VALID F2] EPOCH: 1/4 | STEP: 040/123 | LOSS: 0.08856 (0.12297) | TIME: 0:00:09 |
+[VALID F2] EPOCH: 1/4 | STEP: 080/123 | LOSS: 0.08635 (0.12164) | TIME: 0:00:18 |
+[VALID F2] EPOCH: 1/4 | STEP: 120/123 | LOSS: 0.11010 (0.12098) | TIME: 0:00:27 |
+[VALID F2] EPOCH: 1/4 | STEP: 122/123 | LOSS: 0.19026 (0.12079) | TIME: 0:00:27 |
+
+--------------------
+EPOCH: 1/4 SUMMARY
+--------------------
+| EPOCH   |   TRAIN_LOSS |   VALID_LOSS |   MCRMSE | COLS                                          | TIME    |
+|---------|--------------|--------------|----------|-----------------------------------------------|---------|
+| 1/4     |      0.34298 |      0.12079 |  0.49323 | 0.513 | 0.484 | 0.452 | 0.487 | 0.514 | 0.509 | 0:09:19 |
+
+
+[SAVED] EPOCH: 1 | MCRMSE: 0.4932267963886261
+
+TRAIN_LOOP
+AWP_ACTIVATED
+[TRAIN F2] EPOCH: 2/4 | STEP: 000/366 | LOSS: 0.11940 (0.11940) | LR: 0.00002711 | TIME: 0:00:02 |
+[TRAIN F2] EPOCH: 2/4 | STEP: 040/366 | LOSS: 0.12026 (0.11900) | LR: 0.00002625 | TIME: 0:01:01 |
+[TRAIN F2] EPOCH: 2/4 | STEP: 080/366 | LOSS: 0.09876 (0.11872) | LR: 0.00002529 | TIME: 0:01:59 |
+[TRAIN F2] EPOCH: 2/4 | STEP: 120/366 | LOSS: 0.13131 (0.12001) | LR: 0.00002425 | TIME: 0:02:58 |
+[TRAIN F2] EPOCH: 2/4 | STEP: 160/366 | LOSS: 0.12762 (0.12025) | LR: 0.00002313 | TIME: 0:03:57 |
+[TRAIN F2] EPOCH: 2/4 | STEP: 200/366 | LOSS: 0.09660 (0.11966) | LR: 0.00002195 | TIME: 0:04:54 |
+[TRAIN F2] EPOCH: 2/4 | STEP: 240/366 | LOSS: 0.12371 (0.11864) | LR: 0.00002070 | TIME: 0:05:54 |
+[TRAIN F2] EPOCH: 2/4 | STEP: 280/366 | LOSS: 0.11758 (0.11779) | LR: 0.00001941 | TIME: 0:06:52 |
+[TRAIN F2] EPOCH: 2/4 | STEP: 320/366 | LOSS: 0.10797 (0.11867) | LR: 0.00001808 | TIME: 0:07:51 |
+[TRAIN F2] EPOCH: 2/4 | STEP: 360/366 | LOSS: 0.10260 (0.11886) | LR: 0.00001673 | TIME: 0:08:48 |
+[TRAIN F2] EPOCH: 2/4 | STEP: 365/366 | LOSS: 0.11039 (0.11913) | LR: 0.00001656 | TIME: 0:08:55 |
+
+VALID_LOOP
+[VALID F2] EPOCH: 2/4 | STEP: 000/123 | LOSS: 0.16154 (0.16154) | TIME: 0:00:01 |
+[VALID F2] EPOCH: 2/4 | STEP: 040/123 | LOSS: 0.09338 (0.11137) | TIME: 0:00:09 |
+[VALID F2] EPOCH: 2/4 | STEP: 080/123 | LOSS: 0.09927 (0.11078) | TIME: 0:00:18 |
+[VALID F2] EPOCH: 2/4 | STEP: 120/123 | LOSS: 0.10939 (0.11051) | TIME: 0:00:27 |
+[VALID F2] EPOCH: 2/4 | STEP: 122/123 | LOSS: 0.17079 (0.11028) | TIME: 0:00:27 |
+
+--------------------
+EPOCH: 2/4 SUMMARY
+--------------------
+| EPOCH   |   TRAIN_LOSS |   VALID_LOSS |   MCRMSE | COLS                                          | TIME    |
+|---------|--------------|--------------|----------|-----------------------------------------------|---------|
+| 2/4     |      0.11913 |      0.11028 |   0.4711 | 0.500 | 0.462 | 0.428 | 0.485 | 0.484 | 0.468 | 0:09:22 |
+
+
+[SAVED] EPOCH: 2 | MCRMSE: 0.47110310196876526
+
+TRAIN_LOOP
+AWP_ACTIVATED
+[TRAIN F2] EPOCH: 3/4 | STEP: 000/366 | LOSS: 0.10708 (0.10708) | LR: 0.00001652 | TIME: 0:00:02 |
+[TRAIN F2] EPOCH: 3/4 | STEP: 040/366 | LOSS: 0.06532 (0.10363) | LR: 0.00001515 | TIME: 0:00:59 |
+[TRAIN F2] EPOCH: 3/4 | STEP: 080/366 | LOSS: 0.10086 (0.10447) | LR: 0.00001378 | TIME: 0:01:59 |
+[TRAIN F2] EPOCH: 3/4 | STEP: 120/366 | LOSS: 0.12755 (0.10405) | LR: 0.00001242 | TIME: 0:02:55 |
+[TRAIN F2] EPOCH: 3/4 | STEP: 160/366 | LOSS: 0.10478 (0.10647) | LR: 0.00001108 | TIME: 0:03:53 |
+[TRAIN F2] EPOCH: 3/4 | STEP: 200/366 | LOSS: 0.07581 (0.10638) | LR: 0.00000977 | TIME: 0:04:54 |
+[TRAIN F2] EPOCH: 3/4 | STEP: 240/366 | LOSS: 0.08358 (0.10704) | LR: 0.00000851 | TIME: 0:05:54 |
+[TRAIN F2] EPOCH: 3/4 | STEP: 280/366 | LOSS: 0.07943 (0.10702) | LR: 0.00000730 | TIME: 0:06:54 |
+[TRAIN F2] EPOCH: 3/4 | STEP: 320/366 | LOSS: 0.07529 (0.10687) | LR: 0.00000616 | TIME: 0:07:53 |
+[TRAIN F2] EPOCH: 3/4 | STEP: 360/366 | LOSS: 0.13544 (0.10674) | LR: 0.00000509 | TIME: 0:08:52 |
+[TRAIN F2] EPOCH: 3/4 | STEP: 365/366 | LOSS: 0.07334 (0.10657) | LR: 0.00000496 | TIME: 0:08:59 |
+
+VALID_LOOP
+[VALID F2] EPOCH: 3/4 | STEP: 000/123 | LOSS: 0.15652 (0.15652) | TIME: 0:00:01 |
+[VALID F2] EPOCH: 3/4 | STEP: 040/123 | LOSS: 0.08239 (0.10902) | TIME: 0:00:09 |
+[VALID F2] EPOCH: 3/4 | STEP: 080/123 | LOSS: 0.10228 (0.10772) | TIME: 0:00:18 |
+[VALID F2] EPOCH: 3/4 | STEP: 120/123 | LOSS: 0.11429 (0.10754) | TIME: 0:00:27 |
+[VALID F2] EPOCH: 3/4 | STEP: 122/123 | LOSS: 0.12373 (0.10726) | TIME: 0:00:27 |
+
+--------------------
+EPOCH: 3/4 SUMMARY
+--------------------
+| EPOCH   |   TRAIN_LOSS |   VALID_LOSS |   MCRMSE | COLS                                          | TIME    |
+|---------|--------------|--------------|----------|-----------------------------------------------|---------|
+| 3/4     |      0.10657 |      0.10726 |  0.46454 | 0.496 | 0.458 | 0.424 | 0.472 | 0.478 | 0.459 | 0:09:26 |
+
+
+[SAVED] EPOCH: 3 | MCRMSE: 0.4645378291606903
+
+TRAIN_LOOP
+AWP_ACTIVATED
+[TRAIN F2] EPOCH: 4/4 | STEP: 000/366 | LOSS: 0.10312 (0.10312) | LR: 0.00000493 | TIME: 0:00:02 |
+[TRAIN F2] EPOCH: 4/4 | STEP: 040/366 | LOSS: 0.09670 (0.09916) | LR: 0.00000396 | TIME: 0:01:02 |
+[TRAIN F2] EPOCH: 4/4 | STEP: 080/366 | LOSS: 0.16263 (0.10290) | LR: 0.00000308 | TIME: 0:01:59 |
+[TRAIN F2] EPOCH: 4/4 | STEP: 120/366 | LOSS: 0.08373 (0.09937) | LR: 0.00000230 | TIME: 0:02:54 |
+[TRAIN F2] EPOCH: 4/4 | STEP: 160/366 | LOSS: 0.07132 (0.09828) | LR: 0.00000162 | TIME: 0:03:52 |
+[TRAIN F2] EPOCH: 4/4 | STEP: 200/366 | LOSS: 0.10854 (0.09837) | LR: 0.00000106 | TIME: 0:04:51 |
+[TRAIN F2] EPOCH: 4/4 | STEP: 240/366 | LOSS: 0.06562 (0.09855) | LR: 0.00000061 | TIME: 0:05:50 |
+[TRAIN F2] EPOCH: 4/4 | STEP: 280/366 | LOSS: 0.06496 (0.09809) | LR: 0.00000028 | TIME: 0:06:49 |
+[TRAIN F2] EPOCH: 4/4 | STEP: 320/366 | LOSS: 0.06899 (0.09755) | LR: 0.00000008 | TIME: 0:07:47 |
+[TRAIN F2] EPOCH: 4/4 | STEP: 360/366 | LOSS: 0.09245 (0.09767) | LR: 0.00000000 | TIME: 0:08:47 |
+[TRAIN F2] EPOCH: 4/4 | STEP: 365/366 | LOSS: 0.08801 (0.09763) | LR: 0.00000000 | TIME: 0:08:54 |
+
+VALID_LOOP
+[VALID F2] EPOCH: 4/4 | STEP: 000/123 | LOSS: 0.15255 (0.15255) | TIME: 0:00:01 |
+[VALID F2] EPOCH: 4/4 | STEP: 040/123 | LOSS: 0.07997 (0.10784) | TIME: 0:00:09 |
+[VALID F2] EPOCH: 4/4 | STEP: 080/123 | LOSS: 0.10175 (0.10673) | TIME: 0:00:18 |
+[VALID F2] EPOCH: 4/4 | STEP: 120/123 | LOSS: 0.11020 (0.10666) | TIME: 0:00:27 |
+[VALID F2] EPOCH: 4/4 | STEP: 122/123 | LOSS: 0.12348 (0.10638) | TIME: 0:00:27 |
+
+--------------------
+EPOCH: 4/4 SUMMARY
+--------------------
+| EPOCH   |   TRAIN_LOSS |   VALID_LOSS |   MCRMSE | COLS                                          | TIME    |
+|---------|--------------|--------------|----------|-----------------------------------------------|---------|
+| 4/4     |      0.09763 |      0.10638 |   0.4625 | 0.494 | 0.451 | 0.424 | 0.469 | 0.479 | 0.458 | 0:09:22 |
+
+
+[SAVED] EPOCH: 4 | MCRMSE: 0.4624989926815033
+
+
+----------------------------------- FOLD 2 RESULT -----------------------------------
+  MCRMSE    cohesion    syntax    vocabulary    phraseology    grammar    conventions
+--------  ----------  --------  ------------  -------------  ---------  -------------
+  0.4625     0.49415   0.45117       0.42358         0.4694    0.47857        0.45811
+
+################################### END OF FOlD 2 ###################################
+
+
+Date: 2022-11-28 16:29:32.994864+07:00 (GMT+7)
+Mode: CV_MODE
+Train_on: cuda, (AMP: True, GradScaler: True)
+Model: microsoft/deberta-v3-small
+Model_config: DebertaV2Config {
+  "_name_or_path": "microsoft/deberta-v3-small",
+  "attention_probs_dropout_prob": 0.0,
+  "hidden_act": "gelu",
+  "hidden_dropout": 0.0,
+  "hidden_dropout_prob": 0.0,
+  "hidden_size": 768,
+  "initializer_range": 0.02,
+  "intermediate_size": 3072,
+  "layer_norm_eps": 1e-07,
+  "max_position_embeddings": 512,
+  "max_relative_positions": -1,
+  "model_type": "deberta-v2",
+  "norm_rel_ebd": "layer_norm",
+  "num_attention_heads": 12,
+  "num_hidden_layers": 6,
+  "output_hidden_states": true,
+  "pad_token_id": 0,
+  "pooler_dropout": 0.0,
+  "pooler_hidden_act": "gelu",
+  "pooler_hidden_size": 768,
+  "pos_att_type": [
+    "p2c",
+    "c2p"
+  ],
+  "position_biased_input": false,
+  "position_buckets": 256,
+  "relative_attention": true,
+  "share_att_key": true,
+  "transformers_version": "4.20.1",
+  "type_vocab_size": 0,
+  "vocab_size": 128100
+}
+
+Pooling_strategy: concat_attn_mean_pooling
+Initailzation: None
+AWP: True (adv_lr: 2e-05, adv_eps: 0.001) at epoch 1
+SWA: False (swa_lr: 1e-06, anneal_strat: cos) at last 0.112
+Multi_sample_dropout: True (p: [0.3, 0.3, 0.3, 0.3, 0.3])
+Loss_fn: SmoothL1Loss()
+Optimizer: AdamW
+LR: (Backbone: 2e-05, LowerLayer: 3e-05)
+LR_Scheduler: get_cosine_schedule_with_warmup {'num_warmup_steps': 91, 'num_training_steps': 1464}
+Grad_clip_norm: False (max_norm: 10)
+Number_of_batches: 8 (Gradient_accumulate: 1)
+max_len: 768
+
+TRAIN_LOOP
+AWP_ACTIVATED
+[TRAIN F3] EPOCH: 1/4 | STEP: 000/366 | LOSS: 2.11902 (2.11902) | LR: 0.00000033 | TIME: 0:00:01 |
+[TRAIN F3] EPOCH: 1/4 | STEP: 040/366 | LOSS: 0.36083 (1.85667) | LR: 0.00001352 | TIME: 0:00:58 |
+[TRAIN F3] EPOCH: 1/4 | STEP: 080/366 | LOSS: 0.14284 (1.07028) | LR: 0.00002670 | TIME: 0:01:55 |
+[TRAIN F3] EPOCH: 1/4 | STEP: 120/366 | LOSS: 0.16502 (0.78306) | LR: 0.00002996 | TIME: 0:02:56 |
+[TRAIN F3] EPOCH: 1/4 | STEP: 160/366 | LOSS: 0.22633 (0.62660) | LR: 0.00002981 | TIME: 0:03:56 |
+[TRAIN F3] EPOCH: 1/4 | STEP: 200/366 | LOSS: 0.16633 (0.53162) | LR: 0.00002953 | TIME: 0:04:54 |
+[TRAIN F3] EPOCH: 1/4 | STEP: 240/366 | LOSS: 0.10893 (0.46637) | LR: 0.00002913 | TIME: 0:05:52 |
+[TRAIN F3] EPOCH: 1/4 | STEP: 280/366 | LOSS: 0.12915 (0.41849) | LR: 0.00002860 | TIME: 0:06:50 |
+[TRAIN F3] EPOCH: 1/4 | STEP: 320/366 | LOSS: 0.10117 (0.38209) | LR: 0.00002797 | TIME: 0:07:47 |
+[TRAIN F3] EPOCH: 1/4 | STEP: 360/366 | LOSS: 0.14402 (0.35502) | LR: 0.00002723 | TIME: 0:08:44 |
+[TRAIN F3] EPOCH: 1/4 | STEP: 365/366 | LOSS: 0.20055 (0.35237) | LR: 0.00002713 | TIME: 0:08:51 |
+
+VALID_LOOP
+[VALID F3] EPOCH: 1/4 | STEP: 000/123 | LOSS: 0.12380 (0.12380) | TIME: 0:00:01 |
+[VALID F3] EPOCH: 1/4 | STEP: 040/123 | LOSS: 0.09352 (0.11725) | TIME: 0:00:09 |
+[VALID F3] EPOCH: 1/4 | STEP: 080/123 | LOSS: 0.15635 (0.12134) | TIME: 0:00:18 |
+[VALID F3] EPOCH: 1/4 | STEP: 120/123 | LOSS: 0.08817 (0.12234) | TIME: 0:00:27 |
+[VALID F3] EPOCH: 1/4 | STEP: 122/123 | LOSS: 0.07752 (0.12201) | TIME: 0:00:27 |
+
+--------------------
+EPOCH: 1/4 SUMMARY
+--------------------
+| EPOCH   |   TRAIN_LOSS |   VALID_LOSS |   MCRMSE | COLS                                          | TIME    |
+|---------|--------------|--------------|----------|-----------------------------------------------|---------|
+| 1/4     |      0.35237 |      0.12201 |  0.49445 | 0.560 | 0.483 | 0.435 | 0.465 | 0.560 | 0.464 | 0:09:19 |
+
+
+[SAVED] EPOCH: 1 | MCRMSE: 0.49444594979286194
+
+TRAIN_LOOP
+AWP_ACTIVATED
+[TRAIN F3] EPOCH: 2/4 | STEP: 000/366 | LOSS: 0.11854 (0.11854) | LR: 0.00002711 | TIME: 0:00:02 |
+[TRAIN F3] EPOCH: 2/4 | STEP: 040/366 | LOSS: 0.11257 (0.12857) | LR: 0.00002625 | TIME: 0:01:02 |
+[TRAIN F3] EPOCH: 2/4 | STEP: 080/366 | LOSS: 0.12027 (0.12816) | LR: 0.00002529 | TIME: 0:01:58 |
+[TRAIN F3] EPOCH: 2/4 | STEP: 120/366 | LOSS: 0.09916 (0.12339) | LR: 0.00002425 | TIME: 0:02:57 |
+[TRAIN F3] EPOCH: 2/4 | STEP: 160/366 | LOSS: 0.17018 (0.12422) | LR: 0.00002313 | TIME: 0:03:56 |
+[TRAIN F3] EPOCH: 2/4 | STEP: 200/366 | LOSS: 0.10513 (0.12262) | LR: 0.00002195 | TIME: 0:04:54 |
+[TRAIN F3] EPOCH: 2/4 | STEP: 240/366 | LOSS: 0.09678 (0.12211) | LR: 0.00002070 | TIME: 0:05:53 |
+[TRAIN F3] EPOCH: 2/4 | STEP: 280/366 | LOSS: 0.11523 (0.12252) | LR: 0.00001941 | TIME: 0:06:51 |
+[TRAIN F3] EPOCH: 2/4 | STEP: 320/366 | LOSS: 0.12483 (0.12244) | LR: 0.00001808 | TIME: 0:07:49 |
+[TRAIN F3] EPOCH: 2/4 | STEP: 360/366 | LOSS: 0.11628 (0.12153) | LR: 0.00001673 | TIME: 0:08:47 |
+[TRAIN F3] EPOCH: 2/4 | STEP: 365/366 | LOSS: 0.12678 (0.12204) | LR: 0.00001656 | TIME: 0:08:54 |
+
+VALID_LOOP
+[VALID F3] EPOCH: 2/4 | STEP: 000/123 | LOSS: 0.12099 (0.12099) | TIME: 0:00:01 |
+[VALID F3] EPOCH: 2/4 | STEP: 040/123 | LOSS: 0.10412 (0.10593) | TIME: 0:00:09 |
+[VALID F3] EPOCH: 2/4 | STEP: 080/123 | LOSS: 0.13750 (0.10824) | TIME: 0:00:18 |
+[VALID F3] EPOCH: 2/4 | STEP: 120/123 | LOSS: 0.08717 (0.10898) | TIME: 0:00:27 |
+[VALID F3] EPOCH: 2/4 | STEP: 122/123 | LOSS: 0.10398 (0.10873) | TIME: 0:00:27 |
+
+--------------------
+EPOCH: 2/4 SUMMARY
+--------------------
+| EPOCH   |   TRAIN_LOSS |   VALID_LOSS |   MCRMSE | COLS                                          | TIME    |
+|---------|--------------|--------------|----------|-----------------------------------------------|---------|
+| 2/4     |      0.12204 |      0.10873 |  0.46762 | 0.497 | 0.450 | 0.443 | 0.483 | 0.490 | 0.443 | 0:09:21 |
+
+
+[SAVED] EPOCH: 2 | MCRMSE: 0.46761664748191833
+
+TRAIN_LOOP
+AWP_ACTIVATED
+[TRAIN F3] EPOCH: 3/4 | STEP: 000/366 | LOSS: 0.09854 (0.09854) | LR: 0.00001652 | TIME: 0:00:02 |
+[TRAIN F3] EPOCH: 3/4 | STEP: 040/366 | LOSS: 0.06710 (0.11126) | LR: 0.00001515 | TIME: 0:00:59 |
+[TRAIN F3] EPOCH: 3/4 | STEP: 080/366 | LOSS: 0.10851 (0.10709) | LR: 0.00001378 | TIME: 0:01:58 |
+[TRAIN F3] EPOCH: 3/4 | STEP: 120/366 | LOSS: 0.09075 (0.10649) | LR: 0.00001242 | TIME: 0:02:56 |
+[TRAIN F3] EPOCH: 3/4 | STEP: 160/366 | LOSS: 0.14213 (0.10737) | LR: 0.00001108 | TIME: 0:03:52 |
+[TRAIN F3] EPOCH: 3/4 | STEP: 200/366 | LOSS: 0.11747 (0.10737) | LR: 0.00000977 | TIME: 0:04:47 |
+[TRAIN F3] EPOCH: 3/4 | STEP: 240/366 | LOSS: 0.09691 (0.10925) | LR: 0.00000851 | TIME: 0:05:45 |
+[TRAIN F3] EPOCH: 3/4 | STEP: 280/366 | LOSS: 0.14448 (0.11052) | LR: 0.00000730 | TIME: 0:06:46 |
+[TRAIN F3] EPOCH: 3/4 | STEP: 320/366 | LOSS: 0.09372 (0.10953) | LR: 0.00000616 | TIME: 0:07:43 |
+[TRAIN F3] EPOCH: 3/4 | STEP: 360/366 | LOSS: 0.09716 (0.10785) | LR: 0.00000509 | TIME: 0:08:43 |
+[TRAIN F3] EPOCH: 3/4 | STEP: 365/366 | LOSS: 0.10327 (0.10780) | LR: 0.00000496 | TIME: 0:08:50 |
+
+VALID_LOOP
+[VALID F3] EPOCH: 3/4 | STEP: 000/123 | LOSS: 0.12989 (0.12989) | TIME: 0:00:01 |
+[VALID F3] EPOCH: 3/4 | STEP: 040/123 | LOSS: 0.07920 (0.10165) | TIME: 0:00:09 |
+[VALID F3] EPOCH: 3/4 | STEP: 080/123 | LOSS: 0.13441 (0.10337) | TIME: 0:00:18 |
+[VALID F3] EPOCH: 3/4 | STEP: 120/123 | LOSS: 0.08763 (0.10433) | TIME: 0:00:27 |
+[VALID F3] EPOCH: 3/4 | STEP: 122/123 | LOSS: 0.05612 (0.10405) | TIME: 0:00:27 |
+
+--------------------
+EPOCH: 3/4 SUMMARY
+--------------------
+| EPOCH   |   TRAIN_LOSS |   VALID_LOSS |   MCRMSE | COLS                                          | TIME    |
+|---------|--------------|--------------|----------|-----------------------------------------------|---------|
+| 3/4     |       0.1078 |      0.10405 |  0.45711 | 0.492 | 0.449 | 0.423 | 0.455 | 0.484 | 0.441 | 0:09:18 |
+
+
+[SAVED] EPOCH: 3 | MCRMSE: 0.4571092128753662
+
+TRAIN_LOOP
+AWP_ACTIVATED
+[TRAIN F3] EPOCH: 4/4 | STEP: 000/366 | LOSS: 0.12469 (0.12469) | LR: 0.00000493 | TIME: 0:00:02 |
+[TRAIN F3] EPOCH: 4/4 | STEP: 040/366 | LOSS: 0.07806 (0.09266) | LR: 0.00000396 | TIME: 0:00:59 |
+[TRAIN F3] EPOCH: 4/4 | STEP: 080/366 | LOSS: 0.08590 (0.09156) | LR: 0.00000308 | TIME: 0:01:56 |
+[TRAIN F3] EPOCH: 4/4 | STEP: 120/366 | LOSS: 0.10058 (0.09481) | LR: 0.00000230 | TIME: 0:02:54 |
+[TRAIN F3] EPOCH: 4/4 | STEP: 160/366 | LOSS: 0.10101 (0.09877) | LR: 0.00000162 | TIME: 0:03:50 |
+[TRAIN F3] EPOCH: 4/4 | STEP: 200/366 | LOSS: 0.06901 (0.09856) | LR: 0.00000106 | TIME: 0:04:49 |
+[TRAIN F3] EPOCH: 4/4 | STEP: 240/366 | LOSS: 0.10133 (0.09895) | LR: 0.00000061 | TIME: 0:05:48 |
+[TRAIN F3] EPOCH: 4/4 | STEP: 280/366 | LOSS: 0.06285 (0.09873) | LR: 0.00000028 | TIME: 0:06:47 |
+[TRAIN F3] EPOCH: 4/4 | STEP: 320/366 | LOSS: 0.10430 (0.09808) | LR: 0.00000008 | TIME: 0:07:46 |
+[TRAIN F3] EPOCH: 4/4 | STEP: 360/366 | LOSS: 0.08537 (0.09802) | LR: 0.00000000 | TIME: 0:08:44 |
+[TRAIN F3] EPOCH: 4/4 | STEP: 365/366 | LOSS: 0.11624 (0.09823) | LR: 0.00000000 | TIME: 0:08:52 |
+
+VALID_LOOP
+[VALID F3] EPOCH: 4/4 | STEP: 000/123 | LOSS: 0.12699 (0.12699) | TIME: 0:00:01 |
+[VALID F3] EPOCH: 4/4 | STEP: 040/123 | LOSS: 0.07372 (0.10089) | TIME: 0:00:09 |
+[VALID F3] EPOCH: 4/4 | STEP: 080/123 | LOSS: 0.12759 (0.10215) | TIME: 0:00:18 |
+[VALID F3] EPOCH: 4/4 | STEP: 120/123 | LOSS: 0.08721 (0.10307) | TIME: 0:00:27 |
+[VALID F3] EPOCH: 4/4 | STEP: 122/123 | LOSS: 0.05115 (0.10277) | TIME: 0:00:27 |
+
+--------------------
+EPOCH: 4/4 SUMMARY
+--------------------
+| EPOCH   |   TRAIN_LOSS |   VALID_LOSS |   MCRMSE | COLS                                          | TIME    |
+|---------|--------------|--------------|----------|-----------------------------------------------|---------|
+| 4/4     |      0.09823 |      0.10277 |  0.45429 | 0.492 | 0.448 | 0.419 | 0.451 | 0.476 | 0.440 | 0:09:19 |
+
+
+[SAVED] EPOCH: 4 | MCRMSE: 0.4542868137359619
+
+
+----------------------------------- FOLD 3 RESULT -----------------------------------
+  MCRMSE    cohesion    syntax    vocabulary    phraseology    grammar    conventions
+--------  ----------  --------  ------------  -------------  ---------  -------------
+ 0.45429     0.49151   0.44799       0.41914        0.45142      0.476        0.43966
+
+################################### END OF FOlD 3 ###################################
+
+
