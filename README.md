@@ -3,8 +3,8 @@
 This is repository for tracking my participation in [Feedback Prize - English Language Learning](https://www.kaggle.com/competitions/feedback-prize-english-language-learning/) kaggle competition  
 
 
-Public LB: 177th  
-Private LB: 203rd (Bronzes Medal)
+Public LB: 168th  
+Private LB: 192th (Bronze Medal)
 
 ## What works
 > - Differential learning rates
