@@ -51,3 +51,13 @@
   - ex. train 2048 and infer 640
 - Different loss rates per target
   - ex. {'cohesion':0.21, 'syntax':0.16, 'vocabulary':0.10, 'phraseology':0.16, 'grammar':0.21, 'conventions':0.16}
+
+- Calculate mininum distance between the given data and generated pseudo-labels districution
+  - method
+    loop through the given data dataframe
+      1. select a row from the given data (this row is selected row as loop goes on)
+      1. exclude the previous selected row from newly created candidate dataframe (first iteration contains nothing)
+      1. calculate distance of the selcted row with the whole candidated dataframe using `np.lingalg.norm`and assgin the values to column
+      1. sort by newly created column the candidated dataframe in ascending order (so the minimum distance come first)
+      1. add the minimum distance row to the selected row set (this will be used to exclude already selected row)
+    check distribution between the given data and the candidated data
